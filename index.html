@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>NEON DROP — Advanced Spin System</title>
+<style>
+:root{
+  --bg:#0b0f14;
+  --panel:#0f1621;
+  --card:#121c2b;
+  --accent:#00e5ff;
+  --accent2:#7c4dff;
+  --good:#00ffa3;
+  --warn:#ffb703;
+  --rare:#8ecae6;
+  --epic:#c77dff;
+  --legend:#ffd166;
+  --danger:#ff4d6d;
+}
+*{box-sizing:border-box}
+html,body{height:100%}
+body{
+  margin:0;
+  font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+  background:
+    radial-gradient(1200px 600px at 10% -10%, #13203a55, transparent 40%),
+    radial-gradient(900px 500px at 90% 10%, #2a0f5555, transparent 45%),
+    linear-gradient(180deg, #070a0f, #0b0f14 30%, #06080c);
+  color:#e8f1ff;
+}
+header{
+  padding:24px 28px;
+  display:flex;align-items:center;justify-content:space-between;
+}
+.brand{
+  display:flex;gap:12px;align-items:center;
+}
+.logo{
+  width:44px;height:44px;border-radius:12px;
+  background:conic-gradient(from 180deg, var(--accent), var(--accent2), var(--accent));
+  box-shadow:0 0 30px #00e5ff66;
+}
+h1{margin:0;font-weight:800;letter-spacing:.5px}
+h1 span{color:var(--accent)}
+.controls{
+  display:flex;gap:10px;align-items:center;
+}
+.btn{
+  background:linear-gradient(180deg,#152338,#0e1726);
+  color:#e8f1ff;border:1px solid #20304a;
+  border-radius:12px;padding:10px 14px;cursor:pointer;
+  box-shadow:inset 0 0 0 1px #00000055, 0 10px 30px #00000066;
+}
+.btn.primary{
+  background:linear-gradient(180deg, #00e5ff, #3f7cff);
+  color:#001018;border:none;
+}
+.btn.ghost{background:#0e1726}
+.btn:hover{filter:brightness(1.08)}
+.toggle{display:flex;gap:8px;align-items:center}
+.container{max-width:1200px;margin:0 auto;padding:0 20px 40px}
+.panel{
+  background:linear-gradient(180deg, #0f1621, #0b1220);
+  border:1px solid #1a2a44;border-radius:20px;
+  box-shadow:0 30px 80px #00000099, inset 0 1px 0 #1f3357;
+}
+.nav{
+  display:flex;gap:10px;flex-wrap:wrap;padding:14px;border-bottom:1px solid #1a2a44
+}
+.pill{
+  padding:8px 12px;border-radius:999px;border:1px solid #20304a;
+  background:#0e1726;color:#cfe2ff;cursor:pointer
+}
+.pill.active{background:#142443;border-color:#2b4cff;box-shadow:0 0 0 2px #2b4cff33}
+.main{
+  display:grid;grid-template-columns:1fr 420px;gap:18px;padding:18px
+}
+@media(max-width:980px){.main{grid-template-columns:1fr}}
+/* SPIN AREA */
+.spin-wrap{
+  padding:18px
+}
+.reel{
+  position:relative;overflow:hidden;border-radius:18px;
+  border:1px solid #20304a;background:#0b1220;
+}
+.track{
+  display:flex;gap:14px;align-items:center;
+  padding:22px;transform:translateX(0);
+}
+.item{
+  min-width:180px;height:180px;border-radius:16px;
+  background:linear-gradient(180deg,#12203a,#0e1726);
+  border:1px solid #20304a;position:relative;
+  box-shadow:0 10px 30px #00000088;
+}
+.item .thumb{
+  position:absolute;inset:14px;border-radius:12px;
+  background:radial-gradient(circle at 30% 20%, #ffffff33, transparent 40%), #7aa2;
+}
+.item .label{
+  position:absolute;left:10px;right:10px;bottom:10px;
+  display:flex;justify-content:space-between;align-items:center;
+  font-size:12px;color:#dbe9ff
+}
+.rarity{padding:4px 8px;border-radius:999px;font-weight:700}
+.common{background:#223; color:#bcd}
+.rare{background:#1b3a4b;color:#8ecae6}
+.epic{background:#3a1b4b;color:#c77dff}
+.legend{background:#4b3a1b;color:#ffd166}
+.pointer{
+  position:absolute;top:0;bottom:0;left:50%;width:0;
+}
+.pointer:after{
+  content:'';position:absolute;top:0;bottom:0;left:-2px;width:4px;
+  background:linear-gradient(180deg, transparent, var(--accent), transparent);
+  box-shadow:0 0 20px var(--accent);
+}
+.spin-actions{
+  display:flex;gap:12px;margin-top:14px;align-items:center;flex-wrap:wrap
+}
+/* SIDE */
+.side{
+  padding:18px;display:grid;gap:14px
+}
+.card{
+  background:linear-gradient(180deg,#101b2d,#0c1423);
+  border:1px solid #20304a;border-radius:18px;padding:14px
+}
+.card h3{margin:0 0 10px}
+.inv{
+  display:grid;grid-template-columns:repeat(2,1fr);gap:10px
+}
+.inv .item{height:120px;min-width:auto}
+.footer{
+  text-align:center;opacity:.6;padding:14px
+}
+.glow{
+  box-shadow:0 0 0 0 rgba(0,229,255,.0);
+  animation:glow 1.4s ease-in-out infinite;
+}
+@keyframes glow{
+  0%{box-shadow:0 0 0 0 rgba(0,229,255,.0)}
+  50%{box-shadow:0 0 40px 6px rgba(0,229,255,.25)}
+  100%{box-shadow:0 0 0 0 rgba(0,229,255,.0)}
+}
+/* POPUP */
+.popup{position:fixed;inset:0;background:rgba(0,0,0,.85);display:none;align-items:center;justify-content:center;z-index:50}
+.popup-card{background:#0f1621;border:1px solid #20304a;border-radius:20px;padding:20px;max-width:420px;width:92%}
+</style>
+</head>
+<body>
+<header>
+  <div class="brand">
+    <div class="logo"></div>
+    <h1>NEON <span>DROP</span></h1>
+  </div>
+  <div class="controls">
+    <div class="toggle">
+      <button class="btn ghost" id="musicBtn">Music: ON</button>
+    </div>
+    <button class="btn">Inventory</button>
+    <button class="btn primary" id="openBtn">OPEN</button>
+  </div>
+</header>
+
+<div class="container">
+  <div class="panel">
+    <div class="nav">
+      <div class="pill active">All</div>
+      <div class="pill">Pistols</div>
+      <div class="pill">SMG</div>
+      <div class="pill">Rifles</div>
+      <div class="pill">Special</div>
+    </div>
+    <div class="main">
+      <div class="spin-wrap">
+        <div class="reel">
+          <div class="pointer"></div>
+          <div class="track" id="track"></div>
+        </div>
+        <div class="spin-actions">
+          <button class="btn primary" id="spin">SPIN DROP</button>
+          <button class="btn">Fast</button>
+          <span id="status"></span>
+        </div>
+      </div>
+      <div class="side">
+        <div class="card">
+          <h3>Odds</h3>
+          <small>Common 60% · Rare 25% · Epic 10% · Legendary 5%</small>
+        </div>
+        <div class="card">
+          <h3>Recent Drops</h3>
+          <div class="inv" id="inv"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="popup" id="popup">
+  <div class="popup-card">
+    <h3>You Won</h3>
+    <p id="winText"></p>
+    <button class="btn primary" onclick="closePop()">Nice</button>
+  </div>
+</div>
+
+<audio id="music" loop>
+  <source src="" type="audio/mpeg">
+</audio>
+
+<script>
+const items = [
+  {name:'G17', r:'common'},
+  {name:'HK45', r:'common'},
+  {name:'G23', r:'common'},
+  {name:'Decomb', r:'common'},
+  {name:'SBR', r:'rare'},
+  {name:'Vector', r:'rare'},
+  {name:'Phantom', r:'epic'},
+  {name:'Spectre', r:'epic'},
+  {name:'Apex', r:'legend'},
+];
+const odds = [
+  {r:'common', w:60},
+  {r:'rare', w:25},
+  {r:'epic', w:10},
+  {r:'legend', w:5},
+];
+const track = document.getElementById('track');
+const inv = document.getElementById('inv');
+function rarityClass(r){return r}
+function makeItem(it){
+  const d=document.createElement('div');
+  d.className='item';
+  const t=document.createElement('div');t.className='thumb '+it.r;
+  const l=document.createElement('div');l.className='label';
+  l.innerHTML='<strong>'+it.name+'</strong><span class="rarity '+it.r+'">'+it.r+'</span>';
+  d.appendChild(t);d.appendChild(l);
+  return d;
+}
+function buildTrack(){
+  track.innerHTML='';
+  for(let i=0;i<30;i++){
+    const it=items[Math.floor(Math.random()*items.length)];
+    track.appendChild(makeItem(it));
+  }
+}
+buildTrack();
+function pick(){
+  let roll=Math.random()*100, acc=0, r='common';
+  for(const o of odds){acc+=o.w; if(roll<=acc){r=o.r;break;}}
+  const pool=items.filter(i=>i.r===r);
+  return pool[Math.floor(Math.random()*pool.length)];
+}
+let spinning=false;
+document.getElementById('spin').onclick=()=>{
+  if(spinning) return;
+  spinning=true;
+  document.getElementById('status').textContent='Spinning…';
+  const win=pick();
+  buildTrack();
+  const cards=[...track.children];
+  const winIndex=20;
+  cards[winIndex]=makeItem(win);
+  track.replaceChild(cards[winIndex], track.children[winIndex]);
+  const x=winIndex*194;
+  track.style.transition='transform 4s cubic-bezier(.12,.8,.18,1)';
+  track.style.transform='translateX(' + (-x) + 'px)';
+  setTimeout(()=>{
+    spinning=false;
+    document.getElementById('status').textContent='';
+    addInv(win);
+    showPop(win);
+    track.style.transition='none';
+    track.style.transform='translateX(0)';
+  },4200);
+}
+function addInv(it){
+  const d=makeItem(it);
+  d.classList.add('glow');
+  inv.prepend(d);
+}
+function showPop(it){
+  document.getElementById('winText').textContent=it.name+' ('+it.r+')';
+  document.getElementById('popup').style.display='flex';
+}
+function closePop(){document.getElementById('popup').style.display='none'}
+document.getElementById('musicBtn').onclick=()=>{
+  const m=document.getElementById('music');
+  if(m.paused){m.play();event.target.textContent='Music: ON'}
+  else{m.pause();event.target.textContent='Music: OFF'}
+}
+</script>
+<div class="footer">© Neon Drop — Advanced Spin System</div>
+</body>
+</html>
