@@ -5,91 +5,168 @@
         <title>White City Weapons</title>
         <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;700;800&family=Oswald:wght@500;700&display=swap" rel="stylesheet"/>
         <style>
-        :root {
-            --primary: #ff4655; /* Valorant-style Red */
-            --bg: #0a0a0c;
-            --panel: #111114;
-            --sidebar-w: 280px;
-            --t1: #4fc3f7;
-            --t15: #d32f2f;
-            --t2: #ffb300;
-        }
+            body {
+                font-family: 'Montserrat', sans-serif;
+                font-weight: 700;
+                background: #ffffff;
+                color: #111111;
+                margin: 0;
+            }
 
-        * { box-sizing: border-box; outline: none; }
+            body.dark-mode {
+                background: #0e0e0e;
+                color: #ffffff;
+            }
 
-        body {
-            font-family: 'Montserrat', sans-serif;
-            background: var(--bg);
-            color: #fff;
-            margin: 0;
-            display: flex;
-            min-height: 100vh;
-            overflow-x: hidden;
-        }
+            body.dark-mode h1 {
+                font-family: 'Oswald', sans-serif;
+                color: #c4001a;
+            }
 
-        /* --- ADVANCED SIDEBAR --- */
-        .sidebar {
-            width: var(--sidebar-w);
-            background: linear-gradient(180deg, #111114 0%, #050505 100%);
-            border-right: 1px solid rgba(255, 70, 85, 0.2);
-            padding: 50px 25px;
-            position: fixed;
-            height: 100vh;
-            display: flex;
-            flex-direction: column;
-            z-index: 1000;
-        }
+            body.dark-mode .sidebar button {
+                padding: 10px 16px;
+                font-family: 'Montserrat', sans-serif;
+                font-weight: 800;
+                letter-spacing: 0.3px;
+                font-size: 0.98rem;
+                background: #ffffff;
+                color: #c4001a;
+                border: 2px solid #c4001a;
+                border-radius: 999px;
+                cursor: pointer;
+                transition: transform 0.15s, background 0.2s, color 0.2s;
+            }
 
-        .logo-area {
-            text-align: center;
-            margin-bottom: 60px;
-        }
+            body.dark-mode .sidebar button:hover {
+                background: #c4001a;
+                color: #ffffff;
+                transform: translateY(-1px);
+            }
 
-        .logo-area h1 {
-            font-family: 'Oswald', sans-serif;
-            font-size: 2.5rem;
-            color: var(--primary);
-            margin: 0;
-            text-shadow: 0 0 20px rgba(255, 70, 85, 0.5);
-            letter-spacing: -1px;
-        }
+            body.dark-mode .weapon-section {
+                margin: 0 auto;
+                max-width: 1120px;
+                padding: 0 14px 40px 14px;
+            }
 
-        .nav-btn {
-            background: rgba(255,255,255,0.03);
-            border: 1px solid rgba(255,255,255,0.05);
-            color: #aaa;
-            padding: 18px 25px;
-            border-radius: 4px; /* Sharp modern look */
-            font-weight: 900;
-            text-align: left;
-            cursor: pointer;
-            transition: 0.3s;
-            margin-bottom: 15px;
-            text-transform: uppercase;
-            font-size: 0.8rem;
-            position: relative;
-            overflow: hidden;
-        }
+            body.dark-mode .weapon {
+                background: #23263a;
+                border: 1.5px solid #444;
+            }
 
-        .nav-btn::before {
-            content: '';
-            position: absolute;
-            left: 0; top: 0; bottom: 0; width: 0;
-            background: var(--primary);
-            transition: 0.3s;
-            z-index: -1;
-        }
+            body.dark-mode .weapon img {
+                border: 2px solid #282828;
+            }
 
-        .nav-btn:hover::before, .nav-btn.active::before { width: 100%; }
-        .nav-btn:hover, .nav-btn.active { color: #fff; border-color: var(--primary); transform: skewX(-5deg); }
+            body.dark-mode .stats {
+                background: rgba(0,0,0,0.8);
+                color: #c4001a;
+            }
+            body.dark-mode .section-title {
+                color: #c4001a;
+                border-bottom: 1px solid #444;
+            }
 
-        /* --- MAIN DASHBOARD --- */
-        .dashboard {
-            margin-left: var(--sidebar-w);
-            flex: 1;
-            padding: 60px;
-            position: relative;
-        }
+            body.dark-mode table, body.dark-mode th, body.dark-mode td {
+                border: 1px solid #444;
+            }
+
+            body.dark-mode th, body.dark-mode td {
+                background: #23263a;
+                color: #e0e0e0;
+                border: 1px solid #444;
+            }
+
+            body.dark-mode th {
+                background: #181a20;
+                color: #c4001a;
+            }
+
+            body.dark-mode .comparison-panel {
+                background: #23263a;
+                color: #c4001a;
+                box-shadow: 0 0 10px #c4001a22;
+                border: 1.5px solid #444;
+            }
+
+            body.dark-mode .info-tab {
+                background: linear-gradient(135deg, #181a20ee 70%, #23263a 100%);
+                color: #c4001a;
+                border: 2px solid #444;
+            }
+
+            body.dark-mode .info-tab:hover, body.dark-mode .info-tab:focus {
+                background: linear-gradient(135deg, #23263a 80%, #181a20ee 100%);
+                color: #fff;
+            }
+
+            body.dark-mode .info-popup {
+                background: linear-gradient(135deg, #23263a 80%, #181a20ee 100%);
+                color: #fff;
+                border: 1.5px solid #444;
+            }
+
+            body.dark-mode #toggle-btn {
+                background: #23263a;
+                color: #c4001a;
+                border: 1.5px solid #444;
+            }
+
+            #toggle-btn {
+                display: none !important;
+            }
+
+            body.dark-mode #toggle-btn:hover {
+                background: #c4001a;
+                color: #fff;
+            }
+
+            h1 {
+                font-family: 'Oswald', sans-serif;
+                font-weight: 800;
+                font-size: 2.1rem;
+                letter-spacing: 0.5px;
+            }
+
+            .sidebar {
+                position: sticky;
+                top: 0;
+                left: 0;
+                right: 0;
+                display: flex;
+                flex-direction: row;
+                flex-wrap: wrap;
+                gap: 10px;
+                justify-content: center;
+                align-items: center;
+                padding: 14px 12px;
+                margin: 0 auto 18px auto;
+                z-index: 1000;
+                background: rgba(255,255,255,0.92);
+                backdrop-filter: blur(10px);
+                border-bottom: 2px solid #c4001a;
+            }
+
+            .sidebar button {
+                padding: 10px 16px;
+                font-family: 'Montserrat', sans-serif;
+                font-weight: 800;
+                letter-spacing: 0.3px;
+                font-size: 0.98rem;
+                background: #ffffff;
+                color: #c4001a;
+                border: 2px solid #c4001a;
+                border-radius: 999px;
+                cursor: pointer;
+                transition: transform 0.15s, background 0.2s, color 0.2s;
+            }
+
+            .sidebar button:hover {
+                background: #c4001a;
+                color: #ffffff;
+                transform: translateY(-1px);
+            }
+
             .weapon-section {
                 margin: 0 auto;
                 max-width: 1120px;
