@@ -279,28 +279,81 @@
 
     </div>
 
-    <script>
-const FALLBACK_IMG = "https://i.postimg.cc/0N0Z4y9q/placeholder.png";
+<script>
+/* =======================
+   EDITABLE INVENTORY DATA
+   ======================= */
 
 const WEAPONS = {
-    t1: Array.from({length:20},(_,i)=>({
-        name:`Tier 1 Weapon ${i+1}`,
-        img:FALLBACK_IMG,
-        color:"#4fc3f7"
-    })),
-    t15: Array.from({length:20},(_,i)=>({
-        name:`Tier 1.5 Weapon ${i+1}`,
-        img:"https://i.postimg.cc/VvP3tPzF/gusenberg.png",
-        color:"#d32f2f"
-    })),
-    t2: Array.from({length:20},(_,i)=>({
-        name:`Tier 2 Weapon ${i+1}`,
-        img:"https://i.postimg.cc/mD8x1hM0/ar.png",
-        color:"#ffb300"
-    }))
+    t1: [
+        { name: "Canik", img: "https://i.postimg.cc/0N0Z4y9q/placeholder.png", color:"#4fc3f7" },
+        { name: "Glock 45", img: "https://i.postimg.cc/0N0Z4y9q/placeholder.png", color:"#4fc3f7" },
+
+        // --- EDITABLE PLACEHOLDERS ---
+        { name: "T1 Slot 3", img: "https://i.postimg.cc/0N0Z4y9q/placeholder.png", color:"#4fc3f7" },
+        { name: "T1 Slot 4", img: "https://i.postimg.cc/0N0Z4y9q/placeholder.png", color:"#4fc3f7" },
+        { name: "T1 Slot 5", img: "https://i.postimg.cc/0N0Z4y9q/placeholder.png", color:"#4fc3f7" },
+        { name: "T1 Slot 6", img: "https://i.postimg.cc/0N0Z4y9q/placeholder.png", color:"#4fc3f7" },
+        { name: "T1 Slot 7", img: "https://i.postimg.cc/0N0Z4y9q/placeholder.png", color:"#4fc3f7" },
+        { name: "T1 Slot 8", img: "https://i.postimg.cc/0N0Z4y9q/placeholder.png", color:"#4fc3f7" },
+        { name: "T1 Slot 9", img: "https://i.postimg.cc/0N0Z4y9q/placeholder.png", color:"#4fc3f7" },
+        { name: "T1 Slot 10", img: "https://i.postimg.cc/0N0Z4y9q/placeholder.png", color:"#4fc3f7" },
+        { name: "T1 Slot 11", img: "https://i.postimg.cc/0N0Z4y9q/placeholder.png", color:"#4fc3f7" },
+        { name: "T1 Slot 12", img: "https://i.postimg.cc/0N0Z4y9q/placeholder.png", color:"#4fc3f7" },
+        { name: "T1 Slot 13", img: "https://i.postimg.cc/0N0Z4y9q/placeholder.png", color:"#4fc3f7" },
+        { name: "T1 Slot 14", img: "https://i.postimg.cc/0N0Z4y9q/placeholder.png", color:"#4fc3f7" },
+        { name: "T1 Slot 15", img: "https://i.postimg.cc/0N0Z4y9q/placeholder.png", color:"#4fc3f7" },
+        { name: "T1 Slot 16", img: "https://i.postimg.cc/0N0Z4y9q/placeholder.png", color:"#4fc3f7" },
+        { name: "T1 Slot 17", img: "https://i.postimg.cc/0N0Z4y9q/placeholder.png", color:"#4fc3f7" }
+    ],
+
+    t15: [
+        { name: "Gusenberg", img: "https://i.postimg.cc/VvP3tPzF/gusenberg.png", color:"#d32f2f" },
+
+        // --- EDITABLE PLACEHOLDERS ---
+        { name: "T1.5 Slot 2", img: "https://i.postimg.cc/0N0Z4y9q/placeholder.png", color:"#d32f2f" },
+        { name: "T1.5 Slot 3", img: "https://i.postimg.cc/0N0Z4y9q/placeholder.png", color:"#d32f2f" },
+        { name: "T1.5 Slot 4", img: "https://i.postimg.cc/0N0Z4y9q/placeholder.png", color:"#d32f2f" },
+        { name: "T1.5 Slot 5", img: "https://i.postimg.cc/0N0Z4y9q/placeholder.png", color:"#d32f2f" },
+        { name: "T1.5 Slot 6", img: "https://i.postimg.cc/0N0Z4y9q/placeholder.png", color:"#d32f2f" },
+        { name: "T1.5 Slot 7", img: "https://i.postimg.cc/0N0Z4y9q/placeholder.png", color:"#d32f2f" },
+        { name: "T1.5 Slot 8", img: "https://i.postimg.cc/0N0Z4y9q/placeholder.png", color:"#d32f2f" },
+        { name: "T1.5 Slot 9", img: "https://i.postimg.cc/0N0Z4y9q/placeholder.png", color:"#d32f2f" },
+        { name: "T1.5 Slot 10", img: "https://i.postimg.cc/0N0Z4y9q/placeholder.png", color:"#d32f2f" },
+        { name: "T1.5 Slot 11", img: "https://i.postimg.cc/0N0Z4y9q/placeholder.png", color:"#d32f2f" },
+        { name: "T1.5 Slot 12", img: "https://i.postimg.cc/0N0Z4y9q/placeholder.png", color:"#d32f2f" },
+        { name: "T1.5 Slot 13", img: "https://i.postimg.cc/0N0Z4y9q/placeholder.png", color:"#d32f2f" },
+        { name: "T1.5 Slot 14", img: "https://i.postimg.cc/0N0Z4y9q/placeholder.png", color:"#d32f2f" },
+        { name: "T1.5 Slot 15", img: "https://i.postimg.cc/0N0Z4y9q/placeholder.png", color:"#d32f2f" },
+        { name: "T1.5 Slot 16", img: "https://i.postimg.cc/0N0Z4y9q/placeholder.png", color:"#d32f2f" }
+    ],
+
+    t2: [
+        { name: "Assault Rifle", img: "https://i.postimg.cc/mD8x1hM0/ar.png", color:"#ffb300" },
+        { name: "Special Carbine", img: "https://i.postimg.cc/85zK6L6k/special.png", color:"#ffb300" },
+
+        // --- EDITABLE PLACEHOLDERS ---
+        { name: "T2 Slot 3", img: "https://i.postimg.cc/0N0Z4y9q/placeholder.png", color:"#ffb300" },
+        { name: "T2 Slot 4", img: "https://i.postimg.cc/0N0Z4y9q/placeholder.png", color:"#ffb300" },
+        { name: "T2 Slot 5", img: "https://i.postimg.cc/0N0Z4y9q/placeholder.png", color:"#ffb300" },
+        { name: "T2 Slot 6", img: "https://i.postimg.cc/0N0Z4y9q/placeholder.png", color:"#ffb300" },
+        { name: "T2 Slot 7", img: "https://i.postimg.cc/0N0Z4y9q/placeholder.png", color:"#ffb300" },
+        { name: "T2 Slot 8", img: "https://i.postimg.cc/0N0Z4y9q/placeholder.png", color:"#ffb300" },
+        { name: "T2 Slot 9", img: "https://i.postimg.cc/0N0Z4y9q/placeholder.png", color:"#ffb300" },
+        { name: "T2 Slot 10", img: "https://i.postimg.cc/0N0Z4y9q/placeholder.png", color:"#ffb300" },
+        { name: "T2 Slot 11", img: "https://i.postimg.cc/0N0Z4y9q/placeholder.png", color:"#ffb300" },
+        { name: "T2 Slot 12", img: "https://i.postimg.cc/0N0Z4y9q/placeholder.png", color:"#ffb300" },
+        { name: "T2 Slot 13", img: "https://i.postimg.cc/0N0Z4y9q/placeholder.png", color:"#ffb300" },
+        { name: "T2 Slot 14", img: "https://i.postimg.cc/0N0Z4y9q/placeholder.png", color:"#ffb300" },
+        { name: "T2 Slot 15", img: "https://i.postimg.cc/0N0Z4y9q/placeholder.png", color:"#ffb300" },
+        { name: "T2 Slot 16", img: "https://i.postimg.cc/0N0Z4y9q/placeholder.png", color:"#ffb300" },
+        { name: "T2 Slot 17", img: "https://i.postimg.cc/0N0Z4y9q/placeholder.png", color:"#ffb300" }
+    ]
 };
 
-/* ---------- NAV FIX ---------- */
+/* =======================
+   NAV
+   ======================= */
 function nav(id){
     document.getElementById('sec-weapons').style.display = id === 'weapons' ? 'block' : 'none';
     document.getElementById('sec-lucky').style.display = id === 'lucky' ? 'block' : 'none';
@@ -308,7 +361,9 @@ function nav(id){
     event.currentTarget.classList.add('active');
 }
 
-/* ---------- INVENTORY (FIXED) ---------- */
+/* =======================
+   INVENTORY RENDER (SAFE)
+   ======================= */
 function populateGrids(){
     ['t1','t15','t2'].forEach(tier=>{
         const grid = document.getElementById(`grid-${tier}`);
@@ -327,7 +382,9 @@ function populateGrids(){
     });
 }
 
-/* ---------- SPIN SYSTEM (FROM WHITE CITY WEAPONS) ---------- */
+/* =======================
+   SPIN CONFIG
+   ======================= */
 const SPIN_COUNT = {
     all: 2,
     t1: 4,
@@ -335,51 +392,59 @@ const SPIN_COUNT = {
     t2: 6
 };
 
+/* =======================
+   SPINNER (FIXED)
+   ======================= */
 function runSpinner(){
     const tier = document.getElementById('spin-tier').value;
     const reel = document.getElementById('reel');
     const results = document.getElementById('spin-results');
 
     const pool = tier === 'all'
-        ? [...WEAPONS.t1,...WEAPONS.t15,...WEAPONS.t2]
+        ? [...WEAPONS.t1, ...WEAPONS.t15, ...WEAPONS.t2]
         : WEAPONS[tier];
 
     const spins = SPIN_COUNT[tier];
+
     results.innerHTML = '';
 
+    /* Reset reel */
     reel.innerHTML = '';
     reel.style.transition = 'none';
     reel.style.transform = 'translateX(0)';
 
-    for(let i=0;i<100;i++){
+    /* Build reel */
+    for(let i=0;i<80;i++){
         const item = pool[Math.floor(Math.random()*pool.length)];
-        reel.innerHTML += `
-            <div class="reel-item" style="border-bottom:4px solid ${item.color}">
-                <img src="${item.img}">
-            </div>`;
+        const el = document.createElement('div');
+        el.className = 'reel-item';
+        el.style.borderBottom = `4px solid ${item.color}`;
+        el.innerHTML = `<img src="${item.img}">`;
+        reel.appendChild(el);
     }
 
-    const wins = [];
-    for(let i=0;i<spins;i++){
-        wins.push(pool[Math.floor(Math.random()*pool.length)]);
-    }
-
+    /* Spin */
     requestAnimationFrame(()=>{
         const itemWidth = 195;
-        reel.style.transition = 'transform 6.5s cubic-bezier(.1,0,0,1)';
-        reel.style.transform = `translateX(-${itemWidth*80}px)`;
+        const stopAt = 60;
+        reel.style.transition = 'transform 6s cubic-bezier(.12,.6,.15,1)';
+        reel.style.transform = `translateX(-${stopAt * itemWidth}px)`;
     });
 
+    /* Results */
     setTimeout(()=>{
-        wins.forEach(w=>{
+        for(let i=0;i<spins;i++){
+            const win = pool[Math.floor(Math.random()*pool.length)];
             const img = document.createElement('img');
-            img.src = w.img;
+            img.src = win.img;
             img.style.width = '120px';
             img.style.filter = 'drop-shadow(0 10px 20px rgba(0,0,0,.6))';
             results.appendChild(img);
-        });
-    },6500);
+        }
+    },6100);
 }
 
 window.onload = populateGrids;
 </script>
+
+
