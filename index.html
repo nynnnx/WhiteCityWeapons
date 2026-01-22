@@ -279,33 +279,36 @@
 
     </div>
 
-<script>
+    <script>
 const FALLBACK_IMG = "https://i.postimg.cc/0N0Z4y9q/placeholder.png";
 
 const WEAPONS = {
-    t1: [
-        { name: "Canik", img: FALLBACK_IMG, color: "#4fc3f7" },
-        { name: "Walter", img: FALLBACK_IMG, color: "#4fc3f7" },
-        { name: "Glock 45", img: FALLBACK_IMG, color: "#4fc3f7" }
-    ],
-    t15: [
-        { name: "Gusenberg", img: "https://i.postimg.cc/VvP3tPzF/gusenberg.png", color: "#d32f2f" }
-    ],
-    t2: [
-        { name: "Assault Rifle", img: "https://i.postimg.cc/mD8x1hM0/ar.png", color: "#ffb300" },
-        { name: "Special Carbine", img: "https://i.postimg.cc/85zK6L6k/special.png", color: "#ffb300" }
-    ]
+    t1: Array.from({length:20},(_,i)=>({
+        name:`Tier 1 Weapon ${i+1}`,
+        img:FALLBACK_IMG,
+        color:"#4fc3f7"
+    })),
+    t15: Array.from({length:20},(_,i)=>({
+        name:`Tier 1.5 Weapon ${i+1}`,
+        img:"https://i.postimg.cc/VvP3tPzF/gusenberg.png",
+        color:"#d32f2f"
+    })),
+    t2: Array.from({length:20},(_,i)=>({
+        name:`Tier 2 Weapon ${i+1}`,
+        img:"https://i.postimg.cc/mD8x1hM0/ar.png",
+        color:"#ffb300"
+    }))
 };
 
 /* ---------- NAV FIX ---------- */
 function nav(id){
     document.getElementById('sec-weapons').style.display = id === 'weapons' ? 'block' : 'none';
     document.getElementById('sec-lucky').style.display = id === 'lucky' ? 'block' : 'none';
-    document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+    document.querySelectorAll('.nav-btn').forEach(b=>b.classList.remove('active'));
     event.currentTarget.classList.add('active');
 }
 
-/* ---------- INVENTORY FIX ---------- */
+/* ---------- INVENTORY (FIXED) ---------- */
 function populateGrids(){
     ['t1','t15','t2'].forEach(tier=>{
         const grid = document.getElementById(`grid-${tier}`);
@@ -315,16 +318,17 @@ function populateGrids(){
             card.className = 'card';
             card.innerHTML = `
                 <div class="tier-tag" style="background:${w.color}">${tier}</div>
-                <img src="${w.img || FALLBACK_IMG}">
-                <div style="font-weight:900;font-size:0.8rem;margin-top:15px;text-align:center;">${w.name}</div>
-            `;
+                <img src="${w.img}">
+                <div style="font-weight:900;font-size:0.8rem;margin-top:15px;text-align:center;">
+                    ${w.name}
+                </div>`;
             grid.appendChild(card);
         });
     });
 }
 
-/* ---------- SPIN CONFIG ---------- */
-const SPIN_COUNTS = {
+/* ---------- SPIN SYSTEM (FROM WHITE CITY WEAPONS) ---------- */
+const SPIN_COUNT = {
     all: 2,
     t1: 4,
     t15: 4,
@@ -337,18 +341,15 @@ function runSpinner(){
     const results = document.getElementById('spin-results');
 
     const pool = tier === 'all'
-        ? [...WEAPONS.t1, ...WEAPONS.t15, ...WEAPONS.t2]
+        ? [...WEAPONS.t1,...WEAPONS.t15,...WEAPONS.t2]
         : WEAPONS[tier];
 
-    const spins = SPIN_COUNTS[tier];
+    const spins = SPIN_COUNT[tier];
     results.innerHTML = '';
 
-    // HARD RESET (fixes center-line bug)
     reel.innerHTML = '';
     reel.style.transition = 'none';
     reel.style.transform = 'translateX(0)';
-
-    let wins = [];
 
     for(let i=0;i<100;i++){
         const item = pool[Math.floor(Math.random()*pool.length)];
@@ -358,15 +359,15 @@ function runSpinner(){
             </div>`;
     }
 
-    for(let s=0;s<spins;s++){
+    const wins = [];
+    for(let i=0;i<spins;i++){
         wins.push(pool[Math.floor(Math.random()*pool.length)]);
     }
 
     requestAnimationFrame(()=>{
         const itemWidth = 195;
-        const stopIndex = 80;
         reel.style.transition = 'transform 6.5s cubic-bezier(.1,0,0,1)';
-        reel.style.transform = `translateX(-${stopIndex * itemWidth}px)`;
+        reel.style.transform = `translateX(-${itemWidth*80}px)`;
     });
 
     setTimeout(()=>{
@@ -377,9 +378,8 @@ function runSpinner(){
             img.style.filter = 'drop-shadow(0 10px 20px rgba(0,0,0,.6))';
             results.appendChild(img);
         });
-    }, 6700);
+    },6500);
 }
 
 window.onload = populateGrids;
 </script>
-
