@@ -311,16 +311,6 @@
             ]
         };
 
-            const excludedWeaponNames = new Set(['Canik', 'Walther p88', '', '']);
-    // Guns that should always appear in Tier 1.5 and Tier 2 spins (even if they would normally be excluded)
-    const gunsToIncludeInTier15AndTier2 = new Set(['Canik', '1911', '', 'Glock 19 Foregrip', '', '']);
-    // Exclude these weapons from tier 1.5 spin
-    const excludedFromTier15 = new Set(['Olive glock 17', '', 'Hk45']);
-    const t1ForTier15 = t1Weapons.filter(w => (gunsToIncludeInTier15AndTier2.has(w.name) || !excludedWeaponNames.has(w.name)) && !excludedFromTier15.has(w.name));
-    const tier15Pool = tier15ExclusiveWeapons.concat(t1ForTier15);
-    const t1Filtered = t1Weapons.filter(w => gunsToIncludeInTier15AndTier2.has(w.name) || !excludedWeaponNames.has(w.name));
-    function spinWeapons() {
-        
         function nav(id) {
             document.getElementById('sec-weapons').style.display = id === 'weapons' ? 'block' : 'none';
             document.getElementById('sec-lucky').style.display = id === 'lucky' ? 'block' : 'none';
