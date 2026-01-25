@@ -6,7 +6,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;700;900&family=Oswald:wght@500;700&display=swap" rel="stylesheet"/>
     <style>
         :root {
-            --primary: #ff4655; /* Valorant-style Red */
+            --primary: #ff4655;
             --bg: #0a0a0c;
             --panel: #111114;
             --sidebar-w: 280px;
@@ -27,7 +27,7 @@
             overflow-x: hidden;
         }
 
-        /* --- ADVANCED SIDEBAR --- */
+  
         .sidebar {
             width: var(--sidebar-w);
             background: linear-gradient(180deg, #111114 0%, #050505 100%);
@@ -59,7 +59,7 @@
             border: 1px solid rgba(255,255,255,0.05);
             color: #aaa;
             padding: 18px 25px;
-            border-radius: 4px; /* Sharp modern look */
+            border-radius: 4px; 
             font-weight: 900;
             text-align: left;
             cursor: pointer;
@@ -83,7 +83,7 @@
         .nav-btn:hover::before, .nav-btn.active::before { width: 100%; }
         .nav-btn:hover, .nav-btn.active { color: #fff; border-color: var(--primary); transform: skewX(-5deg); }
 
-        /* --- MAIN DASHBOARD --- */
+    
         .dashboard {
             margin-left: var(--sidebar-w);
             flex: 1;
@@ -91,7 +91,7 @@
             position: relative;
         }
 
-        /* Background Noise/Grid Effect */
+    
         .dashboard::after {
             content: '';
             position: fixed;
@@ -112,7 +112,7 @@
             letter-spacing: -2px;
         }
 
-        /* --- WEAPON CARDS 2.0 --- */
+  
         .grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
@@ -157,7 +157,6 @@
             text-transform: uppercase;
         }
 
-        /* --- ADVANCED SPINNER --- */
         .crate-module {
             background: #111114;
             border: 2px solid #222;
@@ -186,7 +185,7 @@
         .reel {
             display: flex;
             gap: 15px;
-            padding-left: 50%; /* Start at center */
+            padding-left: 50%;
             will-change: transform;
         }
 
@@ -307,8 +306,8 @@
                 ,{ name: "", img: "", color: "#d32f2f" }
             ],
             t2: [
-                { name: "Assault Rifle", img: "https://i.postimg.cc/mD8x1hM0/ar.png", color: "#ffb300" },
-                { name: "Special Carbine", img: "https://i.postimg.cc/85zK6L6k/special.png", color: "#ffb300" }
+                { name: "Test", img: "https://i.postimg.cc/mD8x1hM0/ar.png", color: "#ffb300" },
+                { name: "Test", img: "https://i.postimg.cc/85zK6L6k/special.png", color: "#ffb300" }
             ]
         };
 
@@ -352,16 +351,16 @@
                 reel.innerHTML += `<div class="reel-item" style="border-bottom: 4px solid ${item.color}"><img src="${item.img}"></div>`;
             }
 
-            // Animation
+       
             setTimeout(() => {
-                const winningIndex = 85; // Item that will land in center
-                const itemWidth = 195; // item + gap
+                const winningIndex = 85;
+                const itemWidth = 195;
                 const finalPos = winningIndex * itemWidth - (itemWidth / 2);
                 
                 reel.style.transition = 'transform 7s cubic-bezier(0.1, 0, 0, 1)';
                 reel.style.transform = `translateX(-${finalPos}px)`;
 
-                // Fake Tick Sound Logic
+              
                 let currentTick = 0;
                 const interval = setInterval(() => {
                     tick.currentTime = 0;
@@ -378,6 +377,7 @@
     </script>
 </body>
 </html>
+
 
 
 
