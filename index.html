@@ -235,7 +235,7 @@ body{
     <h2 class="section-title">Probability Engine</h2>
 
     <select id="spin-tier" style="padding:12px 24px;background:#111;color:white;border:1px solid #222">
-        <option value="t1">Test Drop</option>
+        <option value="all">Test Drop</option>
         <option value="t1">Tier 1</option>
         <option value="t15">Tier 1.5</option>
         <option value="t2">Tier 2</option>
@@ -293,7 +293,7 @@ function populate(){
 }
 
 function getConfig(t){
-    if(t==='t1')return{spins:2,pool:WEAPONS.t1};
+    if(t==='all')return{spins:2,pool:WEAPONS.t1};
     if(t==='t1')return{spins:4,pool:WEAPONS.t1};
     if(t==='t15')return{spins:4,pool:WEAPONS.t15};
     if(t==='t2')return{spins:6,pool:WEAPONS.t2};
@@ -326,24 +326,24 @@ function spinOnce(pool,done){
         const fast=target-600;
 
         /* FAST */
-        reel.style.transition='transform 1.4s cubic-bezier(0.2,1,0.3,1)';
+        reel.style.transition='transform 1.2s cubic-bezier(0.2,1,0.3,1)';
         reel.style.transform=`translateX(-${fast}px)`;
 
         /* SLOW */
         setTimeout(()=>{
-            reel.style.transition='transform 2.4s cubic-bezier(0.05,0.7,0.1,1)';
+            reel.style.transition='transform 4.2s cubic-bezier(0.05,0.7,0.1,1)';
             reel.style.transform=`translateX(-${target}px)`;
 
             /* HARD LOCK */
             setTimeout(()=>{
                 reel.style.transition='none';
                 reel.style.transform=`translateX(-${target}px)`;
-            },2400);
+            },4200);
 
-        },1400);
+        },1200);
     });
 
-    setTimeout(()=>done(winner),2000);
+    setTimeout(()=>done(winner),5500);
 }
 
 function runSpinner(){
@@ -360,7 +360,7 @@ function runSpinner(){
                 <div style="font-weight:900">${w.name}</div>
             </div>`;
             c++;
-            if(c<spins)setTimeout(next,1300);
+            if(c<spins)setTimeout(next,300);
         });
     }
     next();
@@ -371,6 +371,3 @@ window.onload=populate;
 
 </body>
 </html>
-
-
-
