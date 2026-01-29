@@ -299,7 +299,7 @@ function getConfig(t){
     if(t==='t2')return{spins:6,pool:WEAPONS.t2};
 }
 
-/* ===== FAST → SLOW SPIN PHYSICS ===== */
+/* ===== FAST → SLOW → HARD STOP SPIN ===== */
 function spinOnce(pool,done){
     const reel=document.getElementById('reel');
     reel.innerHTML='';
@@ -308,6 +308,7 @@ function spinOnce(pool,done){
 
     const items=[];
     for(let i=0;i<35;i++)items.push(pool[Math.floor(Math.random()*pool.length)]);
+
     const winIndex=26;
     const winner=pool[Math.floor(Math.random()*pool.length)];
     items[winIndex]=winner;
@@ -324,18 +325,25 @@ function spinOnce(pool,done){
         const target=winIndex*w-(reel.parentElement.offsetWidth/2-w/2);
         const fast=target-600;
 
-        /* FAST START */
+        /* FAST */
         reel.style.transition='transform 1.2s cubic-bezier(0.2,1,0.3,1)';
         reel.style.transform=`translateX(-${fast}px)`;
 
-        /* SLOW END */
+        /* SLOW */
         setTimeout(()=>{
             reel.style.transition='transform 4.2s cubic-bezier(0.05,0.7,0.1,1)';
             reel.style.transform=`translateX(-${target}px)`;
+
+            /* HARD LOCK */
+            setTimeout(()=>{
+                reel.style.transition='none';
+                reel.style.transform=`translateX(-${target}px)`;
+            },4200);
+
         },1200);
     });
 
-    setTimeout(()=>done(winner),5600);
+    setTimeout(()=>done(winner),5500);
 }
 
 function runSpinner(){
