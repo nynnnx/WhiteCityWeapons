@@ -1,166 +1,83 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="utf-8"/>
-<title>White City Weapons</title>
-
-<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;700;900&family=Oswald:wght@500;700&display=swap" rel="stylesheet"/>
-
+<meta charset="UTF-8">
+<title>White City Spin</title>
 <style>
 :root {
-    --primary:#ff4655;
-    --bg:#0a0a0c;
-    --panel:#111114;
-    --sidebar-w:280px;
+    --primary:#ff2a3b;
     --t1:#4fc3f7;
     --t15:#d32f2f;
     --t2:#ffb300;
 }
-
 *{box-sizing:border-box}
-body{
-    margin:0;
-    background:var(--bg);
-    color:#fff;
-    font-family:Montserrat,sans-serif;
-    display:flex;
-    min-height:100vh;
-}
+body{margin:0;background:#0b0b0b;color:#fff;font-family:Arial,Helvetica,sans-serif}
 
-/* SIDEBAR */
 .sidebar{
-    width:var(--sidebar-w);
-    background:linear-gradient(180deg,#111114,#050505);
-    border-right:1px solid rgba(255,70,85,.2);
-    padding:50px 25px;
-    position:fixed;
-    height:100vh;
+    position:fixed;left:0;top:0;bottom:0;width:240px;
+    background:#0f0f0f;border-right:2px solid #151515;padding:20px
 }
-.logo-area h1{
-    font-family:Oswald;
-    color:var(--primary);
-    font-size:2.5rem;
-    margin:0;
-}
-.nav-btn{
-    width:100%;
-    margin-bottom:15px;
-    padding:18px 25px;
-    background:rgba(255,255,255,.03);
-    border:1px solid rgba(255,255,255,.05);
-    color:#aaa;
-    cursor:pointer;
-    font-weight:900;
-    text-transform:uppercase;
-}
-.nav-btn.active,
-.nav-btn:hover{
-    color:#fff;
-    border-color:var(--primary);
-}
+.logo-area h1{margin:0;font-weight:900}
+.sidebar-nav{margin-top:30px;display:flex;flex-direction:column;gap:10px}
+.nav-btn{background:#111;color:white;border:1px solid #222;padding:12px;font-weight:800;cursor:pointer}
+.nav-btn.active{border-color:var(--primary)}
 
-/* DASHBOARD */
-.dashboard{
-    margin-left:var(--sidebar-w);
-    padding:60px;
-    flex:1;
-}
+.dashboard{margin-left:260px;padding:30px}
+.section-title{font-weight:900;margin-bottom:20px}
 
-.section-title{
-    font-size:3rem;
-    font-weight:900;
-    border-left:8px solid var(--primary);
-    padding-left:25px;
-}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,160px);gap:15px}
+.card{background:#111;border:1px solid #222;padding:10px;text-align:center}
+.card img{max-width:100%;height:90px;object-fit:contain}
+.tier-tag{font-size:0.6rem;font-weight:900;padding:4px;margin-bottom:6px}
 
-/* GRID */
-.grid{
-    display:grid;
-    grid-template-columns:repeat(auto-fill,minmax(220px,1fr));
-    gap:30px;
-}
-
-/* SPINNER */
-.crate-module{
-    background:#111114;
-    border:2px solid #222;
-    padding:60px;
-}
-.spinner-viewport{
-    height:220px;
-    background:#000;
-    overflow:hidden;
-    position:relative;
-    display:flex;
-    align-items:center;
-}
-.center-line{
-    position:absolute;
-    left:50%;
-    top:0;
-    bottom:0;
-    width:4px;
-    background:var(--primary);
-}
-.reel{
-    display:flex;
-    gap:15px;
-    padding-left:50%;
-}
-.reel-item{
-    width:180px;
-    height:180px;
-    background:#1a1a20;
-    border:1px solid #333;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-}
-.reel-item img{
-    width:80%;
-    height:80%;
-    object-fit:contain;
-}
+.crate-module{margin-top:20px}
+.spinner-viewport{position:relative;overflow:hidden;width:900px;height:210px;border:2px solid #222}
+.reel{display:flex;height:100%}
+.reel-item{width:195px;flex-shrink:0;display:flex;align-items:center;justify-content:center;background:#111}
+.reel-item img{max-height:130px}
+.center-line{position:absolute;top:0;bottom:0;left:50%;width:4px;background:var(--primary);z-index:10}
 .spin-btn{
-    margin-top:40px;
-    padding:20px 80px;
-    background:var(--primary);
-    border:none;
-    color:#fff;
-    font-size:1.2rem;
-    font-weight:900;
-    cursor:pointer;
+    margin-top:20px;background:var(--primary);border:none;color:white;
+    padding:14px 36px;font-weight:900;font-size:1.1rem;cursor:pointer
 }
+
+#spin-results{display:flex;gap:15px;margin-top:25px;flex-wrap:wrap}
+#spin-results div{text-align:center}
+#spin-results img{height:80px}
 </style>
 </head>
-
 <body>
 
 <div class="sidebar">
     <div class="logo-area">
         <h1>WHITE CITY</h1>
-        <p style="opacity:.5;font-size:.7rem;font-weight:900">V1.0 SYSTEM</p>
+        <p style="opacity:.6;font-size:.7rem;font-weight:900">V1.0 SYSTEM</p>
     </div>
-
-    <button class="nav-btn active" onclick="nav('weapons',this)">Storage</button>
-    <button class="nav-btn" onclick="nav('lucky',this)">Randomize</button>
+    <div class="sidebar-nav">
+        <button class="nav-btn active" onclick="nav('weapons')">White City Storage</button>
+        <button class="nav-btn" onclick="nav('lucky')">Randomize</button>
+    </div>
 </div>
 
 <div class="dashboard">
 
-<!-- INVENTORY -->
 <div id="sec-weapons">
     <h2 class="section-title">Inventory Data</h2>
-    <h3 style="color:var(--t1)">Tier 1</h3>
-    <div class="grid"></div>
+    <h3 style="color:var(--t1)">TIER 1</h3>
+    <div class="grid" id="grid-t1"></div>
+
+    <h3 style="color:var(--t15);margin-top:40px">TIER 1.5</h3>
+    <div class="grid" id="grid-t15"></div>
+
+    <h3 style="color:var(--t2);margin-top:40px">TIER 2</h3>
+    <div class="grid" id="grid-t2"></div>
 </div>
 
-<!-- SPINNER -->
 <div id="sec-lucky" style="display:none">
     <h2 class="section-title">Probability Engine</h2>
 
-    <select id="spin-tier" style="padding:10px 20px;background:#222;color:#fff;border:1px solid var(--primary)">
-        <option value="all">Test Drops</option>
+    <select id="spin-tier" style="padding:10px 20px;background:#111;color:white;border:1px solid #222">
+        <option value="all">Test Drop</option>
         <option value="t1">Tier 1</option>
         <option value="t15">Tier 1.5</option>
         <option value="t2">Tier 2</option>
@@ -171,103 +88,75 @@ body{
             <div class="center-line"></div>
             <div id="reel" class="reel"></div>
         </div>
-        <div style="text-align:center">
-            <button class="spin-btn" onclick="runSpinner()">SPIN</button>
-        </div>
+        <button class="spin-btn" onclick="runSpinner()">SPIN</button>
+        <div id="spin-results"></div>
     </div>
 </div>
 
 </div>
 
 <script>
-// ================= DATA =================
-
-const WEAPONS = {
+const WEAPONS={
     t1:[
-        {name:"Glock Fade",img:"images/glock.png",color:"#4fc3f7"},
-        {name:"USP Neo",img:"images/usp.png",color:"#4fc3f7"}
+        {name:'Canik',img:'https://i.postimg.cc/mD8x1hM0/ar.png',color:'var(--t1)'},
+        {name:'Glock',img:'https://i.postimg.cc/85zK6L6k/special.png',color:'var(--t1)'}
     ],
     t15:[
-        {name:"AK Bloodsport",img:"images/ak.png",color:"#d32f2f"}
+        {name:'FNX-45',img:'https://i.postimg.cc/mD8x1hM0/ar.png',color:'var(--t15)'}
     ],
     t2:[
-        {name:"AWP Dragon",img:"images/awp.png",color:"#ffb300"}
+        {name:'AR',img:'https://i.postimg.cc/mD8x1hM0/ar.png',color:'var(--t2)'}
     ]
 };
 
-// ================= NAV =================
-
-function nav(section,btn){
-    document.getElementById("sec-weapons").style.display =
-        section==="weapons"?"block":"none";
-    document.getElementById("sec-lucky").style.display =
-        section==="lucky"?"block":"none";
-
-    document.querySelectorAll(".nav-btn").forEach(b=>b.classList.remove("active"));
-    btn.classList.add("active");
+function nav(id){
+    document.getElementById('sec-weapons').style.display=id==='weapons'?'block':'none';
+    document.getElementById('sec-lucky').style.display=id==='lucky'?'block':'none';
+    document.querySelectorAll('.nav-btn').forEach(b=>b.classList.remove('active'));
+    event.target.classList.add('active');
 }
 
-// ================= SPINNER =================
-
-let spinning=false;
-
-function getSpinConfig(tier){
-    if(tier==="all") return {spins:2,pool:[...WEAPONS.t1,...WEAPONS.t15,...WEAPONS.t2]};
-    if(tier==="t1") return {spins:4,pool:WEAPONS.t1};
-    if(tier==="t15") return {spins:4,pool:WEAPONS.t15};
-    if(tier==="t2") return {spins:6,pool:WEAPONS.t2};
-}
-
-function spinOnce(pool,callback){
-    const reel=document.getElementById("reel");
-    reel.innerHTML="";
-    reel.style.transition="none";
-    reel.style.transform="translateX(0)";
-
-    const items=[];
-    for(let i=0;i<30;i++){
-        items.push(pool[Math.floor(Math.random()*pool.length)]);
-    }
-
-    const winIndex=22;
-    const winner=items[winIndex];
-
-    items.forEach(w=>{
-        const d=document.createElement("div");
-        d.className="reel-item";
-        d.style.borderBottom=`4px solid ${w.color}`;
-        d.innerHTML=`<img src="${w.img}">`;
-        reel.appendChild(d);
+function populate(){['t1','t15','t2'].forEach(t=>{
+    const g=document.getElementById('grid-'+t);
+    WEAPONS[t].forEach(w=>{
+        g.innerHTML+=`<div class='card'><div class='tier-tag' style='background:${w.color}'>${t}</div><img src='${w.img}'><div style='font-weight:900'>${w.name}</div></div>`;
     });
+});}
 
+function getConfig(t){
+    if(t==='all')return{spins:2,pool:WEAPONS.t1};
+    if(t==='t1')return{spins:4,pool:WEAPONS.t1};
+    if(t==='t15')return{spins:4,pool:WEAPONS.t15};
+    if(t==='t2')return{spins:6,pool:WEAPONS.t2};
+}
+
+function spinOnce(pool,done){
+    const reel=document.getElementById('reel');
+    reel.innerHTML='';reel.style.transition='none';reel.style.transform='translateX(0)';
+    const items=[];for(let i=0;i<35;i++)items.push(pool[Math.floor(Math.random()*pool.length)]);
+    const winIndex=26;const winner=pool[Math.floor(Math.random()*pool.length)];items[winIndex]=winner;
+    items.forEach(i=>{reel.innerHTML+=`<div class='reel-item' style='border-bottom:4px solid ${i.color}'><img src='${i.img}'></div>`});
     requestAnimationFrame(()=>{
-        const itemW=195;
-        const offset=winIndex*itemW-(reel.parentElement.offsetWidth/2-itemW/2);
-        reel.style.transition="transform 5.5s cubic-bezier(.15,0,.1,1)";
-        reel.style.transform=`translateX(-${offset}px)`;
+        const w=195;const off=winIndex*w-(reel.parentElement.offsetWidth/2-w/2);
+        reel.style.transition='transform 6s cubic-bezier(.15,0,.1,1)';
+        reel.style.transform=`translateX(-${off}px)`;
     });
-
-    setTimeout(()=>callback(winner),5600);
+    setTimeout(()=>done(winner),6100);
 }
 
 function runSpinner(){
-    if(spinning) return;
-    spinning=true;
-
-    const tier=document.getElementById("spin-tier").value;
-    const {spins,pool}=getSpinConfig(tier);
-
-    let done=0;
-    function next(){
-        spinOnce(pool,()=>{
-            done++;
-            if(done<spins) setTimeout(next,400);
-            else spinning=false;
-        });
-    }
+    const tier=document.getElementById('spin-tier').value;
+    const {spins,pool}=getConfig(tier);
+    const box=document.getElementById('spin-results');box.innerHTML='';
+    let c=0;
+    function next(){spinOnce(pool,w=>{
+        box.innerHTML+=`<div><img src='${w.img}'><div style='font-weight:900'>${w.name}</div></div>`;
+        c++;if(c<spins)setTimeout(next,300);
+    });}
     next();
 }
-</script>
 
+window.onload=populate;
+</script>
 </body>
 </html>
