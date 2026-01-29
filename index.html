@@ -338,12 +338,12 @@ function spinOnce(pool,done){
             setTimeout(()=>{
                 reel.style.transition='none';
                 reel.style.transform=`translateX(-${target}px)`;
-            },2200);
+            },4200);
 
         },1200);
     });
 
-    setTimeout(()=>done(winner),2500);
+    setTimeout(()=>done(winner),5500);
 }
 
 function runSpinner(){
@@ -371,4 +371,3 @@ window.onload=populate;
 
 </body>
 </html>
-
