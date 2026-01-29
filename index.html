@@ -323,7 +323,7 @@ function spinOnce(pool,done){
     requestAnimationFrame(()=>{
         const w=195;
         const target=winIndex*w-(reel.parentElement.offsetWidth/2-w/2);
-        const fast=target-600;
+        const fast=target-2600;
 
         /* FAST */
         reel.style.transition='transform 1.2s cubic-bezier(0.2,1,0.3,1)';
@@ -331,14 +331,14 @@ function spinOnce(pool,done){
 
         /* SLOW */
         setTimeout(()=>{
-            reel.style.transition='transform 4.2s cubic-bezier(0.05,0.7,0.1,1)';
+            reel.style.transition='transform 2.5s cubic-bezier(0.05,0.7,0.1,1)';
             reel.style.transform=`translateX(-${target}px)`;
 
             /* HARD LOCK */
             setTimeout(()=>{
                 reel.style.transition='none';
                 reel.style.transform=`translateX(-${target}px)`;
-            },4200);
+            },2500);
 
         },1200);
     });
@@ -371,4 +371,5 @@ window.onload=populate;
 
 </body>
 </html>
+
 
