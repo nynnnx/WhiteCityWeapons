@@ -331,19 +331,19 @@ function spinOnce(pool,done){
 
         /* SLOW */
         setTimeout(()=>{
-            reel.style.transition='transform 1.4s cubic-bezier(0.05,0.7,0.1,1)';
+            reel.style.transition='transform 2.4s cubic-bezier(0.05,0.7,0.1,1)';
             reel.style.transform=`translateX(-${target}px)`;
 
             /* HARD LOCK */
             setTimeout(()=>{
                 reel.style.transition='none';
                 reel.style.transform=`translateX(-${target}px)`;
-            },1400);
+            },2400);
 
         },1200);
     });
 
-    setTimeout(()=>done(winner),5500);
+    setTimeout(()=>done(winner),2400);
 }
 
 function runSpinner(){
@@ -371,3 +371,4 @@ window.onload=populate;
 
 </body>
 </html>
+
