@@ -11,7 +11,6 @@
     --primary:#ff2a3b;
     --bg:#0b0b0b;
     --panel:#111;
-    --panel-2:#151515;
     --t1:#4fc3f7;
     --t15:#d32f2f;
     --t2:#ffb300;
@@ -39,7 +38,6 @@ body{
     margin:0;
     font-size:2.3rem;
     color:var(--primary);
-    letter-spacing:-1px;
 }
 .sidebar-nav{
     margin-top:50px;
@@ -48,12 +46,11 @@ body{
     gap:14px;
 }
 .nav-btn{
-    background:linear-gradient(180deg,#141414,#0c0c0c);
+    background:#121212;
     border:1px solid #222;
     color:#aaa;
     padding:16px 18px;
     font-weight:900;
-    text-transform:uppercase;
     cursor:pointer;
     transition:.25s;
 }
@@ -81,63 +78,52 @@ body{
 /* ===== INVENTORY GRID ===== */
 .grid{
     display:grid;
-    grid-template-columns:repeat(auto-fill,minmax(180px,1fr));
-    gap:22px;
+    grid-template-columns:repeat(auto-fill,minmax(190px,1fr));
+    gap:24px;
 }
 
 /* ===== INVENTORY CARD ===== */
 .card{
-    background:
-        linear-gradient(180deg,#161616,#0e0e0e);
+    background:linear-gradient(180deg,#161616,#0e0e0e);
     border:1px solid #262626;
-    padding:18px 14px 20px;
+    padding:18px 14px 22px;
     text-align:center;
     position:relative;
     transition:.35s;
     overflow:hidden;
 }
-.card::before{
-    content:'';
-    position:absolute;
-    inset:0;
-    background:linear-gradient(120deg,transparent,rgba(255,255,255,.06),transparent);
-    opacity:0;
-    transition:.35s;
-}
-.card:hover::before{opacity:1}
-
 .card:hover{
     transform:translateY(-8px) scale(1.03);
 }
-
-/* tier glow */
 .card[data-tier="t1"]:hover{box-shadow:0 0 28px var(--t1)}
 .card[data-tier="t15"]:hover{box-shadow:0 0 28px var(--t15)}
 .card[data-tier="t2"]:hover{box-shadow:0 0 28px var(--t2)}
 
 .card img{
-    height:130px;
+    height:135px;
     width:100%;
     object-fit:contain;
     transition:.35s;
     filter:drop-shadow(0 10px 15px rgba(0,0,0,.7));
 }
-.card:hover img{
-    transform:scale(1.15);
-}
+.card:hover img{transform:scale(1.15)}
 
+/* SIDE TIER TAG */
 .tier-tag{
+    position:absolute;
+    left:0;
+    top:14px;
+    writing-mode:vertical-rl;
+    text-orientation:mixed;
+    padding:8px 6px;
     font-size:.6rem;
     font-weight:900;
-    padding:4px 8px;
-    display:inline-block;
-    margin-bottom:10px;
     text-transform:uppercase;
 }
 
 /* ===== SPINNER ===== */
 .crate-module{
-    margin-top:30px;
+    margin-top:35px;
     background:linear-gradient(180deg,#111,#080808);
     border:2px solid #1f1f1f;
     padding:35px;
@@ -170,36 +156,39 @@ body{
     justify-content:center;
     background:#111;
 }
-.reel-item img{
-    max-height:150px;
-}
+.reel-item img{max-height:150px}
 
+/* CENTERED SPIN BUTTON */
+.spin-wrap{
+    display:flex;
+    justify-content:center;
+    margin-top:30px;
+}
 .spin-btn{
-    margin-top:25px;
     background:linear-gradient(135deg,#ff2a3b,#c30012);
     border:none;
     color:white;
-    padding:16px 44px;
+    padding:18px 56px;
     font-weight:900;
-    font-size:1.1rem;
+    font-size:1.15rem;
     cursor:pointer;
     transition:.3s;
 }
 .spin-btn:hover{
-    transform:scale(1.07);
+    transform:scale(1.08);
     box-shadow:0 0 25px rgba(255,42,59,.6);
 }
 
-/* ===== RESULTS ===== */
+/* CENTERED RESULTS */
 #spin-results{
     display:flex;
-    gap:18px;
-    margin-top:30px;
+    justify-content:center;
+    gap:22px;
+    margin-top:35px;
     flex-wrap:wrap;
 }
-#spin-results div{text-align:center}
 #spin-results img{
-    height:90px;
+    height:95px;
     filter:drop-shadow(0 8px 12px rgba(0,0,0,.7));
 }
 </style>
@@ -248,7 +237,11 @@ body{
             <div class="center-line"></div>
             <div id="reel" class="reel"></div>
         </div>
-        <button class="spin-btn" onclick="runSpinner()">SPIN</button>
+
+        <div class="spin-wrap">
+            <button class="spin-btn" onclick="runSpinner()">SPIN</button>
+        </div>
+
         <div id="spin-results"></div>
     </div>
 </div>
