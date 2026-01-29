@@ -3,49 +3,204 @@
 <head>
 <meta charset="UTF-8">
 <title>White City Spin</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;700;900&family=Oswald:wght@500;700&display=swap" rel="stylesheet">
+
 <style>
-:root {
+:root{
     --primary:#ff2a3b;
+    --bg:#0b0b0b;
+    --panel:#111;
     --t1:#4fc3f7;
     --t15:#d32f2f;
     --t2:#ffb300;
 }
+
 *{box-sizing:border-box}
-body{margin:0;background:#0b0b0b;color:#fff;font-family:Arial,Helvetica,sans-serif}
+body{
+    margin:0;
+    background:radial-gradient(circle at top,#111,#050505 60%);
+    color:#fff;
+    font-family:Montserrat,Arial,sans-serif;
+}
 
+/* ===== SIDEBAR ===== */
 .sidebar{
-    position:fixed;left:0;top:0;bottom:0;width:240px;
-    background:#0f0f0f;border-right:2px solid #151515;padding:20px
+    position:fixed;
+    inset:0 auto 0 0;
+    width:260px;
+    background:linear-gradient(180deg,#0f0f0f,#070707);
+    border-right:2px solid #1b1b1b;
+    padding:30px;
 }
-.logo-area h1{margin:0;font-weight:900}
-.sidebar-nav{margin-top:30px;display:flex;flex-direction:column;gap:10px}
-.nav-btn{background:#111;color:white;border:1px solid #222;padding:12px;font-weight:800;cursor:pointer}
-.nav-btn.active{border-color:var(--primary)}
+.logo-area h1{
+    font-family:Oswald;
+    margin:0;
+    font-size:2.3rem;
+    color:var(--primary);
+}
+.sidebar-nav{
+    margin-top:50px;
+    display:flex;
+    flex-direction:column;
+    gap:14px;
+}
+.nav-btn{
+    background:#121212;
+    border:1px solid #222;
+    color:#aaa;
+    padding:16px 18px;
+    font-weight:900;
+    cursor:pointer;
+    transition:.25s;
+}
+.nav-btn:hover,
+.nav-btn.active{
+    color:white;
+    border-color:var(--primary);
+    box-shadow:0 0 15px rgba(255,42,59,.35);
+}
 
-.dashboard{margin-left:260px;padding:30px}
-.section-title{font-weight:900;margin-bottom:20px}
+/* ===== DASHBOARD ===== */
+.dashboard{
+    margin-left:260px;
+    padding:50px;
+}
 
-.grid{display:grid;grid-template-columns:repeat(auto-fill,160px);gap:15px}
-.card{background:#111;border:1px solid #222;padding:10px;text-align:center}
-.card img{max-width:100%;height:90px;object-fit:contain}
-.tier-tag{font-size:0.6rem;font-weight:900;padding:4px;margin-bottom:6px}
+.section-title{
+    font-size:3rem;
+    font-weight:900;
+    margin-bottom:40px;
+    border-left:8px solid var(--primary);
+    padding-left:20px;
+}
 
-.crate-module{margin-top:20px}
-.spinner-viewport{position:relative;overflow:hidden;width:900px;height:210px;border:2px solid #222}
-.reel{display:flex;height:100%}
-.reel-item{width:195px;flex-shrink:0;display:flex;align-items:center;justify-content:center;background:#111}
-.reel-item img{max-height:130px}
-.center-line{position:absolute;top:0;bottom:0;left:50%;width:4px;background:var(--primary);z-index:10}
+/* ===== INVENTORY GRID ===== */
+.grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fill,minmax(200px,1fr));
+    gap:26px;
+}
+
+/* ===== INVENTORY CARD ===== */
+.card{
+    background:linear-gradient(180deg,#1a1a1a,#0e0e0e);
+    border:1px solid #262626;
+    padding:18px 14px 22px;
+    text-align:center;
+    position:relative;
+    overflow:hidden;
+    transition:.35s;
+}
+.card:hover{
+    transform:translateY(-8px) scale(1.03);
+}
+.card[data-tier="t1"]:hover{box-shadow:0 0 28px var(--t1)}
+.card[data-tier="t15"]:hover{box-shadow:0 0 28px var(--t15)}
+.card[data-tier="t2"]:hover{box-shadow:0 0 28px var(--t2)}
+
+.card img{
+    height:150px;
+    width:100%;
+    object-fit:contain;
+    transition:.35s;
+    filter:drop-shadow(0 12px 18px rgba(0,0,0,.7));
+}
+.card:hover img{transform:scale(1.15)}
+
+/* ===== CORNER TIER RIBBON ===== */
+.tier-tag{
+    position:absolute;
+    top:0;
+    right:0;
+    width:52px;
+    height:52px;
+    font-size:.65rem;
+    font-weight:900;
+    color:#fff;
+    display:flex;
+    align-items:flex-start;
+    justify-content:flex-end;
+    padding:6px 6px 0 0;
+    clip-path:polygon(100% 0, 0 0, 100% 100%);
+    z-index:5;
+    box-shadow:-3px 3px 12px rgba(0,0,0,.6);
+    text-transform:uppercase;
+}
+
+/* ===== SPINNER ===== */
+.crate-module{
+    margin-top:35px;
+    background:linear-gradient(180deg,#111,#080808);
+    border:2px solid #1f1f1f;
+    padding:35px;
+}
+.spinner-viewport{
+    position:relative;
+    overflow:hidden;
+    height:220px;
+    border:2px solid #262626;
+    background:#000;
+}
+.center-line{
+    position:absolute;
+    top:0;bottom:0;
+    left:50%;
+    width:4px;
+    background:var(--primary);
+    box-shadow:0 0 25px var(--primary);
+    z-index:10;
+}
+.reel{
+    display:flex;
+    height:100%;
+}
+.reel-item{
+    width:195px;
+    flex-shrink:0;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    background:#111;
+}
+.reel-item img{max-height:150px}
+
+/* ===== CENTERED SPIN BUTTON ===== */
+.spin-wrap{
+    display:flex;
+    justify-content:center;
+    margin-top:30px;
+}
 .spin-btn{
-    margin-top:20px;background:var(--primary);border:none;color:white;
-    padding:14px 36px;font-weight:900;font-size:1.1rem;cursor:pointer
+    background:linear-gradient(135deg,#ff2a3b,#c30012);
+    border:none;
+    color:white;
+    padding:18px 56px;
+    font-weight:900;
+    font-size:1.15rem;
+    cursor:pointer;
+    transition:.3s;
+}
+.spin-btn:hover{
+    transform:scale(1.08);
+    box-shadow:0 0 25px rgba(255,42,59,.6);
 }
 
-#spin-results{display:flex;gap:15px;margin-top:25px;flex-wrap:wrap}
-#spin-results div{text-align:center}
-#spin-results img{height:80px}
+/* ===== CENTERED RESULTS ===== */
+#spin-results{
+    display:flex;
+    justify-content:center;
+    gap:22px;
+    margin-top:35px;
+    flex-wrap:wrap;
+}
+#spin-results img{
+    height:95px;
+    filter:drop-shadow(0 8px 12px rgba(0,0,0,.7));
+}
 </style>
 </head>
+
 <body>
 
 <div class="sidebar">
@@ -61,22 +216,25 @@ body{margin:0;background:#0b0b0b;color:#fff;font-family:Arial,Helvetica,sans-ser
 
 <div class="dashboard">
 
+<!-- INVENTORY -->
 <div id="sec-weapons">
     <h2 class="section-title">Inventory Data</h2>
-    <h3 style="color:var(--t1)">TIER 1</h3>
+
+    <h3 style="color:var(--t1)">Tier 1</h3>
     <div class="grid" id="grid-t1"></div>
 
-    <h3 style="color:var(--t15);margin-top:40px">TIER 1.5</h3>
+    <h3 style="color:var(--t15);margin-top:60px">Tier 1.5</h3>
     <div class="grid" id="grid-t15"></div>
 
-    <h3 style="color:var(--t2);margin-top:40px">TIER 2</h3>
+    <h3 style="color:var(--t2);margin-top:60px">Tier 2</h3>
     <div class="grid" id="grid-t2"></div>
 </div>
 
+<!-- SPINNER -->
 <div id="sec-lucky" style="display:none">
     <h2 class="section-title">Probability Engine</h2>
 
-    <select id="spin-tier" style="padding:10px 20px;background:#111;color:white;border:1px solid #222">
+    <select id="spin-tier" style="padding:12px 24px;background:#111;color:white;border:1px solid #222">
         <option value="all">Test Drop</option>
         <option value="t1">Tier 1</option>
         <option value="t15">Tier 1.5</option>
@@ -88,7 +246,11 @@ body{margin:0;background:#0b0b0b;color:#fff;font-family:Arial,Helvetica,sans-ser
             <div class="center-line"></div>
             <div id="reel" class="reel"></div>
         </div>
-        <button class="spin-btn" onclick="runSpinner()">SPIN</button>
+
+        <div class="spin-wrap">
+            <button class="spin-btn" onclick="runSpinner()">SPIN</button>
+        </div>
+
         <div id="spin-results"></div>
     </div>
 </div>
@@ -99,7 +261,7 @@ body{margin:0;background:#0b0b0b;color:#fff;font-family:Arial,Helvetica,sans-ser
 const WEAPONS={
     t1:[
         {name:'Canik',img:'https://i.postimg.cc/mD8x1hM0/ar.png',color:'var(--t1)'},
-        {name:'Glock',img:'https://i.postimg.cc/85zK6L6k/special.png',color:'var(--t1)'}
+        {name:'Walter',img:'https://i.postimg.cc/85zK6L6k/special.png',color:'var(--t1)'}
     ],
     t15:[
         {name:'FNX-45',img:'https://i.postimg.cc/mD8x1hM0/ar.png',color:'var(--t15)'}
@@ -116,12 +278,19 @@ function nav(id){
     event.target.classList.add('active');
 }
 
-function populate(){['t1','t15','t2'].forEach(t=>{
-    const g=document.getElementById('grid-'+t);
-    WEAPONS[t].forEach(w=>{
-        g.innerHTML+=`<div class='card'><div class='tier-tag' style='background:${w.color}'>${t}</div><img src='${w.img}'><div style='font-weight:900'>${w.name}</div></div>`;
+function populate(){
+    ['t1','t15','t2'].forEach(t=>{
+        const g=document.getElementById('grid-'+t);
+        WEAPONS[t].forEach(w=>{
+            g.innerHTML+=`
+            <div class="card" data-tier="${t}">
+                <div class="tier-tag" style="background:${w.color}">${t}</div>
+                <img src="${w.img}">
+                <div style="font-weight:900;margin-top:10px">${w.name}</div>
+            </div>`;
+        });
     });
-});}
+}
 
 function getConfig(t){
     if(t==='all')return{spins:2,pool:WEAPONS.t1};
@@ -130,33 +299,75 @@ function getConfig(t){
     if(t==='t2')return{spins:6,pool:WEAPONS.t2};
 }
 
+/* ===== FAST → SLOW → HARD STOP SPIN ===== */
 function spinOnce(pool,done){
     const reel=document.getElementById('reel');
-    reel.innerHTML='';reel.style.transition='none';reel.style.transform='translateX(0)';
-    const items=[];for(let i=0;i<35;i++)items.push(pool[Math.floor(Math.random()*pool.length)]);
-    const winIndex=26;const winner=pool[Math.floor(Math.random()*pool.length)];items[winIndex]=winner;
-    items.forEach(i=>{reel.innerHTML+=`<div class='reel-item' style='border-bottom:4px solid ${i.color}'><img src='${i.img}'></div>`});
-    requestAnimationFrame(()=>{
-        const w=195;const off=winIndex*w-(reel.parentElement.offsetWidth/2-w/2);
-        reel.style.transition='transform 6s cubic-bezier(.15,0,.1,1)';
-        reel.style.transform=`translateX(-${off}px)`;
+    reel.innerHTML='';
+    reel.style.transition='none';
+    reel.style.transform='translateX(0)';
+
+    const items=[];
+    for(let i=0;i<35;i++)items.push(pool[Math.floor(Math.random()*pool.length)]);
+
+    const winIndex=26;
+    const winner=pool[Math.floor(Math.random()*pool.length)];
+    items[winIndex]=winner;
+
+    items.forEach(i=>{
+        reel.innerHTML+=`
+        <div class="reel-item" style="border-bottom:4px solid ${i.color}">
+            <img src="${i.img}">
+        </div>`;
     });
-    setTimeout(()=>done(winner),6100);
+
+    requestAnimationFrame(()=>{
+        const w=195;
+        const target=winIndex*w-(reel.parentElement.offsetWidth/2-w/2);
+        const fast=target-600;
+
+        /* FAST */
+        reel.style.transition='transform 1.2s cubic-bezier(0.2,1,0.3,1)';
+        reel.style.transform=`translateX(-${fast}px)`;
+
+        /* SLOW */
+        setTimeout(()=>{
+            reel.style.transition='transform 4.2s cubic-bezier(0.05,0.7,0.1,1)';
+            reel.style.transform=`translateX(-${target}px)`;
+
+            /* HARD LOCK */
+            setTimeout(()=>{
+                reel.style.transition='none';
+                reel.style.transform=`translateX(-${target}px)`;
+            },4200);
+
+        },1200);
+    });
+
+    setTimeout(()=>done(winner),5500);
 }
 
 function runSpinner(){
     const tier=document.getElementById('spin-tier').value;
     const {spins,pool}=getConfig(tier);
-    const box=document.getElementById('spin-results');box.innerHTML='';
+    const box=document.getElementById('spin-results');
+    box.innerHTML='';
     let c=0;
-    function next(){spinOnce(pool,w=>{
-        box.innerHTML+=`<div><img src='${w.img}'><div style='font-weight:900'>${w.name}</div></div>`;
-        c++;if(c<spins)setTimeout(next,300);
-    });}
+    function next(){
+        spinOnce(pool,w=>{
+            box.innerHTML+=`
+            <div>
+                <img src="${w.img}">
+                <div style="font-weight:900">${w.name}</div>
+            </div>`;
+            c++;
+            if(c<spins)setTimeout(next,300);
+        });
+    }
     next();
 }
 
 window.onload=populate;
 </script>
+
 </body>
 </html>
