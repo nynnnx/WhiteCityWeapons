@@ -232,7 +232,7 @@ body{
 
 <!-- SPINNER -->
 <div id="sec-lucky" style="display:none">
-    <h2 class="section-title">Simulate a faction drop spin</h2>
+    <h2 class="section-title">Probability Engine</h2>
 
     <select id="spin-tier" style="padding:12px 24px;background:#111;color:white;border:1px solid #222">
         <option value="all">Test Drop</option>
@@ -323,7 +323,7 @@ function spinOnce(pool,done){
     requestAnimationFrame(()=>{
         const w=195;
         const target=winIndex*w-(reel.parentElement.offsetWidth/2-w/2);
-        const fast=target-2600;
+        const fast=target-600;
 
         /* FAST */
         reel.style.transition='transform 1.2s cubic-bezier(0.2,1,0.3,1)';
@@ -331,19 +331,19 @@ function spinOnce(pool,done){
 
         /* SLOW */
         setTimeout(()=>{
-            reel.style.transition='transform 2.5s cubic-bezier(0.05,0.7,0.1,1)';
+            reel.style.transition='transform 4.2s cubic-bezier(0.05,0.7,0.1,1)';
             reel.style.transform=`translateX(-${target}px)`;
 
             /* HARD LOCK */
             setTimeout(()=>{
                 reel.style.transition='none';
                 reel.style.transform=`translateX(-${target}px)`;
-            },2500);
+            },4200);
 
         },1200);
     });
 
-    setTimeout(()=>done(winner),2500);
+    setTimeout(()=>done(winner),5500);
 }
 
 function runSpinner(){
@@ -371,5 +371,3 @@ window.onload=populate;
 
 </body>
 </html>
-
-
