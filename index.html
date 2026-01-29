@@ -326,7 +326,7 @@ function spinOnce(pool,done){
         const fast=target-600;
 
         /* FAST */
-        reel.style.transition='transform 1.2s cubic-bezier(0.2,1,0.3,1)';
+        reel.style.transition='transform 1.4s cubic-bezier(0.2,1,0.3,1)';
         reel.style.transform=`translateX(-${fast}px)`;
 
         /* SLOW */
@@ -340,10 +340,10 @@ function spinOnce(pool,done){
                 reel.style.transform=`translateX(-${target}px)`;
             },2400);
 
-        },1200);
+        },1400);
     });
 
-    setTimeout(()=>done(winner),1200);
+    setTimeout(()=>done(winner),2000);
 }
 
 function runSpinner(){
@@ -360,7 +360,7 @@ function runSpinner(){
                 <div style="font-weight:900">${w.name}</div>
             </div>`;
             c++;
-            if(c<spins)setTimeout(next,300);
+            if(c<spins)setTimeout(next,1300);
         });
     }
     next();
@@ -371,5 +371,6 @@ window.onload=populate;
 
 </body>
 </html>
+
 
 
