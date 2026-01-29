@@ -338,9 +338,9 @@ function spinOnce(pool,done){
             setTimeout(()=>{
                 reel.style.transition='none';
                 reel.style.transform=`translateX(-${target}px)`;
-            },200);
+            },1400);
 
-        },200);
+        },1200);
     });
 
     setTimeout(()=>done(winner),5500);
@@ -371,5 +371,3 @@ window.onload=populate;
 
 </body>
 </html>
-
-
