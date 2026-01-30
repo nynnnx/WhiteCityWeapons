@@ -346,7 +346,7 @@ requestAnimationFrame(()=>{
 
     /* SLOW */
     setTimeout(()=>{
-        reel.style.transition='transform 1.95s linear';
+        reel.style.transition='transform 2.95s cubic-bezier(0.05,0.7,0.1,1)';
         reel.style.transform=`translateX(-${target}px)`;
 
         /* HARD LOCK */
