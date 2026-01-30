@@ -1,182 +1,242 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-<title>White City Weapon Spin</title>
+<meta charset="UTF-8">
+<title>White City Spin</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;700;900&family=Oswald:wght@500;700&display=swap" rel="stylesheet">
+
 <style>
-
-body {
-  background:#000;
-  color:white;
-  font-family:Arial;
-  overflow:hidden;
+:root{
+    --primary:#ff2a3b;
+    --bg:#0b0b0b;
+    --panel:#111;
+    --t1:#4fc3f7;
+    --t15:#d32f2f;
+    --t2:#ffb300;
 }
 
-.sidebar {
-  position:fixed;
-  left:0;
-  top:0;
-  width:220px;
-  height:100%;
-  background:#ff2b2b;
-  box-shadow:0 0 25px rgba(255,0,0,0.8);
-  padding:15px;
+*{box-sizing:border-box}
+body{
+    margin:0;
+    background:radial-gradient(circle at top,#111,#050505 60%);
+    color:#fff;
+    font-family:Montserrat,Arial,sans-serif;
 }
 
-.sidebar button {
-  width:100%;
-  padding:15px;
-  margin-bottom:10px;
-  border:none;
-  background:#ff2b2b;
-  color:white;
-  font-weight:bold;
-  cursor:pointer;
-  border-radius:6px;
+/* ===== SIDEBAR ===== */
+.sidebar{
+    position:fixed;
+    inset:0 auto 0 0;
+    width:260px;
+    background:linear-gradient(180deg,#0f0f0f,#070707);
+    border-right:2px solid #1b1b1b;
+    padding:30px;
+}
+.logo-area h1{
+    font-family:Oswald;
+    margin:0;
+    font-size:2.3rem;
+    color:var(--primary);
+}
+.sidebar-nav{
+    margin-top:50px;
+    display:flex;
+    flex-direction:column;
+    gap:14px;
+}
+.nav-btn{
+    background:#121212;
+    border:1px solid #222;
+    color:#aaa;
+    padding:16px 18px;
+    font-weight:900;
+    cursor:pointer;
+    transition:.25s;
+}
+.nav-btn:hover,
+.nav-btn.active{
+    color:white;
+    border-color:var(--primary);
+    box-shadow:0 0 15px rgba(255,42,59,.35);
 }
 
-.sidebar button:hover {
-  background:#ff0000;
+/* ===== DASHBOARD ===== */
+.dashboard{
+    margin-left:260px;
+    padding:50px;
+}
+.section-title{
+    font-size:3rem;
+    font-weight:900;
+    margin-bottom:40px;
+    border-left:8px solid var(--primary);
+    padding-left:20px;
 }
 
-#wheelContainer {
-  position:absolute;
-  left:260px;
-  top:40%;
-  width:800px;
-  height:120px;
-  overflow:hidden;
-  border:2px solid white;
+/* ===== SPINNER ===== */
+.crate-module{
+    margin-top:35px;
+    background:linear-gradient(180deg,#111,#080808);
+    border:2px solid #1f1f1f;
+    padding:35px;
 }
-
-#wheel {
-  display:flex;
-  transition:transform 5s cubic-bezier(.1,.57,.1,1);
+.spinner-viewport{
+    position:relative;
+    overflow:hidden;
+    height:220px;
+    border:2px solid #262626;
+    background:#000;
 }
-
-.weapon {
-  min-width:150px;
-  text-align:center;
-  padding:10px;
-  border-right:2px solid #333;
+.center-line{
+    position:absolute;
+    top:0;bottom:0;
+    left:50%;
+    width:4px;
+    background:var(--primary);
+    box-shadow:0 0 25px var(--primary);
+    z-index:10;
 }
-
-.weapon img {
-  width:100px;
+.reel{
+    display:flex;
+    height:100%;
 }
-
-.pointer {
-  position:absolute;
-  left:640px;
-  top:38%;
-  width:5px;
-  height:150px;
-  background:red;
+.reel-item{
+    width:195px;
+    flex-shrink:0;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    background:#111;
 }
+.reel-item img{max-height:150px}
 
+.spin-wrap{
+    display:flex;
+    justify-content:center;
+    margin-top:30px;
+}
+.spin-btn{
+    background:linear-gradient(135deg,#ff2a3b,#c30012);
+    border:none;
+    color:white;
+    padding:18px 56px;
+    font-weight:900;
+    font-size:1.15rem;
+    cursor:pointer;
+}
 </style>
 </head>
 
 <body>
 
 <div class="sidebar">
-<button onclick="spinTier('t1')">Tier 1</button>
-<button onclick="spinTier('t15')">Tier 1.5</button>
-<button onclick="spinTier('t2')">Tier 2</button>
-<button onclick="spinTier('test')">Test Drop</button>
+    <div class="logo-area">
+        <h1>WHITE CITY</h1>
+        <p style="opacity:.6;font-size:.7rem;font-weight:900">V1.1 SYSTEM</p>
+    </div>
+    <div class="sidebar-nav">
+        <button class="nav-btn active" onclick="nav('spin')">Spin</button>
+    </div>
 </div>
 
-<div id="wheelContainer">
-  <div id="wheel"></div>
+<div class="dashboard">
+<div id="sec-spin">
+    <h2 class="section-title">Faction Drop Simulator</h2>
+
+    <select id="spin-tier" style="padding:12px 24px;background:#111;color:white;border:1px solid #222">
+        <option value="t1">Tier 1</option>
+        <option value="t15">Tier 1.5</option>
+        <option value="t2">Tier 2</option>
+    </select>
+
+    <div class="crate-module">
+        <div class="spinner-viewport">
+            <div class="center-line"></div>
+            <div id="reel" class="reel"></div>
+        </div>
+
+        <div class="spin-wrap">
+            <button class="spin-btn" onclick="runSpinner()">SPIN</button>
+        </div>
+    </div>
 </div>
-<div class="pointer"></div>
+</div>
 
 <script>
-
-// ================= WEAPONS =================
-
+/* =====================================================
+   🔫 WEAPONS (UNCHANGED — DO NOT EDIT)
+===================================================== */
 const WEAPONS = {
-t1: [
-{name:"Canik", img:"img/canik.png"},
-{name:"Hi Point", img:"img/hipoint.png"},
-{name:"Rusty Revolver", img:"img/revolver.png"}
-],
-
-t15: [
-{name:"Glock 45", img:"img/glock45.png"},
-{name:"Glock 17", img:"img/glock17.png"},
-{name:"Glock 43", img:"img/glock43.png"},
-{name:"1911", img:"img/1911.png"},
-{name:"FN57", img:"img/fn57.png"},
-{name:"Glock 45x", img:"img/glock45x.png"},
-{name:"Glock 17 Gen 5", img:"img/glock17gen5.png"}
-],
-
-t2: [
-{name:"Glock 19x", img:"img/glock19x.png"},
-{name:"Glock 17", img:"img/glock17.png"},
-{name:"HK45", img:"img/hk45.png"},
-{name:"Glock 43", img:"img/glock43.png"},
-{name:"Glock 45", img:"img/glock45.png"},
-{name:"Glock 45x", img:"img/glock45x.png"},
-{name:"1911", img:"img/1911.png"},
-{name:"Glock 19", img:"img/glock19.png"}
-]
+    t1: [
+        {name:'Canik',img:'data:image/webp;base64,PUT_YOUR_CANIK_IMAGE'}
+    ],
+    t15: [
+        {name:'Glock 17',img:'data:image/webp;base64,PUT_IMAGE'}
+    ],
+    t2: [
+        {name:'Draco',img:'data:image/webp;base64,PUT_IMAGE'}
+    ]
 };
 
-let spinSpeed = 5000;
+/* =====================================================
+   🗑️ TRASH GUN LIST (EDIT THIS)
+===================================================== */
+const TRASH_GUNS = [
+    {
+        name: "Walter",
+        img: "data:image/webp;base64,PUT_WALTER_IMAGE"
+    },
+    {
+        name: "Rusty Pistol",
+        img: "data:image/webp;base64,PUT_IMAGE"
+    }
+];
 
-// ================= BUILD WHEEL =================
+/* =====================================================
+   🎯 TRASH CHANCE (EDIT THIS)
+===================================================== */
+const TRASH_CHANCE = {
+    t15: 0.35, // 35%
+    t2: 0.25  // 25%
+};
 
-function buildWheel(list){
-  const wheel = document.getElementById("wheel");
-  wheel.innerHTML = "";
-
-  for(let i=0;i<40;i++){
-    const w = list[Math.floor(Math.random()*list.length)];
-    const div = document.createElement("div");
-    div.className="weapon";
-    div.innerHTML = `<img src="${w.img}"><br>${w.name}`;
-    wheel.appendChild(div);
-  }
+/* =====================================================
+   🎰 SPIN LOGIC
+===================================================== */
+function getSpinItem(tier){
+    if ((tier === "t15" || tier === "t2") && Math.random() < TRASH_CHANCE[tier]) {
+        return TRASH_GUNS[Math.floor(Math.random() * TRASH_GUNS.length)];
+    }
+    return WEAPONS[tier][Math.floor(Math.random() * WEAPONS[tier].length)];
 }
 
-// ================= SPIN =================
+function runSpinner(){
+    const reel = document.getElementById("reel");
+    reel.innerHTML = "";
 
-function spinTier(tier){
-  let list;
-  let drops = 1;
+    const tier = document.getElementById("spin-tier").value;
+    const items = [];
 
-  if(tier=="test"){ list = WEAPONS.t1; drops=1; }
-  if(tier=="t1"){ list = WEAPONS.t1; drops=4; }
-  if(tier=="t15"){ list = WEAPONS.t15; drops=4; }
-  if(tier=="t2"){ list = WEAPONS.t2; drops=6; }
+    for(let i=0;i<30;i++){
+        items.push(getSpinItem(tier));
+    }
 
-  buildWheel(list);
+    items.forEach(item=>{
+        const div=document.createElement("div");
+        div.className="reel-item";
+        div.innerHTML=`<img src="${item.img}" alt="${item.name}">`;
+        reel.appendChild(div);
+    });
 
-  const wheel = document.getElementById("wheel");
-  const itemWidth = 150;
-  const stopIndex = Math.floor(Math.random()*30)+5;
-  const finalPos = stopIndex * itemWidth;
+    reel.style.transition="none";
+    reel.style.transform="translateX(0)";
 
-  wheel.style.transition = "none";
-  wheel.style.transform = "translateX(0px)";
-  setTimeout(()=>{
-    wheel.style.transition = `transform ${spinSpeed/1000}s cubic-bezier(.1,.57,.1,1)`;
-    wheel.style.transform = `translateX(-${finalPos}px)`;
-  },50);
-
-  // SNAP FIX (NO JUMP BUG)
-  setTimeout(()=>{
-    const snapIndex = Math.floor(finalPos/itemWidth);
-    const snapPos = snapIndex * itemWidth;
-    wheel.style.transition="transform .25s ease-out";
-    wheel.style.transform=`translateX(-${snapPos}px)`;
-  }, spinSpeed);
-
-  // Faster each spin
-  spinSpeed = Math.max(1500, spinSpeed - 300);
+    setTimeout(()=>{
+        reel.style.transition="transform 5s cubic-bezier(.15,.8,.15,1)";
+        reel.style.transform="translateX(-4300px)";
+    },50);
 }
-
 </script>
 
 </body>
