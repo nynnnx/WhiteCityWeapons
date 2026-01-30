@@ -341,12 +341,12 @@ requestAnimationFrame(()=>{
     const fast=target-600;
 
     /* FAST */
-    reel.style.transition='transform 1.85s linear';
+    reel.style.transition='transform 1.85s cubic-bezier(0.2,1,0.3,1)';
     reel.style.transform=`translateX(-${fast}px)`;
 
     /* SLOW */
     setTimeout(()=>{
-        reel.style.transition='transform 0.95s cubic-bezier(0.2,0.9,0.35,1)';
+        reel.style.transition='transform 1.95s linear';
         reel.style.transform=`translateX(-${target}px)`;
 
         /* HARD LOCK */
