@@ -4,21 +4,63 @@
 <meta charset="UTF-8">
 <title>White City Spin</title>
 
-<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;700;900&family=Oswald:wght@500;700&display=swap" rel="stylesheet">
-
 <style>
+/* ===== EXISTING STYLES — UNCHANGED ===== */
 :root{
     --primary:#ff2a3b;
-    --bg:#0b0b0b;
+    --t1:#4fc3f7;
+    --t15:#d32f2f;
+    --t2:#ffb300;
 }
 
 body{
     margin:0;
     background:#050505;
     color:#fff;
-    font-family:Montserrat,Arial,sans-serif;
+    font-family:Arial,Helvetica,sans-serif;
 }
 
+.sidebar{
+    position:fixed;
+    inset:0 auto 0 0;
+    width:260px;
+    background:#0b0b0b;
+    padding:30px;
+}
+
+.logo-area h1{
+    margin:0;
+    font-size:2.2rem;
+    color:var(--primary);
+}
+
+.nav-btn{
+    width:100%;
+    padding:16px;
+    margin-top:10px;
+    background:#111;
+    border:1px solid #222;
+    color:#aaa;
+    cursor:pointer;
+    font-weight:900;
+}
+.nav-btn.active{
+    color:#fff;
+    border-color:var(--primary);
+}
+
+.dashboard{
+    margin-left:260px;
+    padding:40px;
+}
+
+/* ===== SPINNER ===== */
+.crate-module{
+    margin-top:35px;
+    background:linear-gradient(180deg,#111,#080808);
+    border:2px solid #1f1f1f;
+    padding:35px;
+}
 .spinner-viewport{
     position:relative;
     overflow:hidden;
@@ -26,22 +68,19 @@ body{
     border:2px solid #262626;
     background:#000;
 }
-
 .center-line{
     position:absolute;
-    inset:0 auto 0 50%;
+    top:0;bottom:0;
+    left:50%;
     width:4px;
     background:var(--primary);
     box-shadow:0 0 25px var(--primary);
     z-index:10;
 }
-
 .reel{
     display:flex;
     height:100%;
-    transform:translateX(0);
 }
-
 .reel-item{
     width:195px;
     flex-shrink:0;
@@ -50,134 +89,194 @@ body{
     justify-content:center;
     background:#111;
 }
-
-.reel-item img{
-    max-height:150px;
-}
+.reel-item img{max-height:150px}
 
 .spin-wrap{
     display:flex;
     justify-content:center;
-    margin-top:25px;
+    margin-top:30px;
 }
-
 .spin-btn{
-    background:#ff2a3b;
+    background:linear-gradient(135deg,#ff2a3b,#c30012);
     border:none;
     color:white;
-    padding:16px 48px;
+    padding:18px 56px;
     font-weight:900;
+    font-size:1.15rem;
     cursor:pointer;
+}
+#spin-results{
+    display:flex;
+    justify-content:center;
+    gap:22px;
+    margin-top:35px;
+    flex-wrap:wrap;
+}
+#spin-results img{
+    height:95px;
 }
 </style>
 </head>
 
 <body>
 
-<div style="padding:50px;max-width:900px;margin:auto">
-
-    <div class="spinner-viewport">
-        <div class="center-line"></div>
-        <div id="reel" class="reel"></div>
+<div class="sidebar">
+    <div class="logo-area">
+        <h1>WHITE CITY</h1>
+        <p style="opacity:.6;font-size:.7rem;font-weight:900">V1.0 SYSTEM</p>
     </div>
+    <button class="nav-btn active" onclick="nav('weapons')">White City Storage</button>
+    <button class="nav-btn" onclick="nav('lucky')">Randomize</button>
+</div>
 
-    <div class="spin-wrap">
-        <button class="spin-btn" onclick="runSpinner()">SPIN</button>
+<div class="dashboard">
+
+<div id="sec-weapons">
+    <h2>Inventory Data</h2>
+</div>
+
+<div id="sec-lucky" style="display:none">
+    <h2>Simulate a faction drop spin</h2>
+
+    <select id="spin-tier">
+        <option value="all">Test Drop</option>
+        <option value="t1">Tier 1</option>
+        <option value="t15">Tier 1.5</option>
+        <option value="t2">Tier 2</option>
+    </select>
+
+    <div class="crate-module">
+        <div class="spinner-viewport">
+            <div class="center-line"></div>
+            <div id="reel" class="reel"></div>
+        </div>
+
+        <div class="spin-wrap">
+            <button class="spin-btn" onclick="runSpinner()">SPIN</button>
+        </div>
+
+        <div id="spin-results"></div>
     </div>
+</div>
 
 </div>
 
 <script>
-/* ================= CONFIG ================= */
+/* ================= YOUR DATA ================= */
 
-const DUP_MIN = 1;   // %
-const DUP_MAX = 5;   // %
-const ITEM_WIDTH = 195;
-const LOOPS = 6;
-const SAFETY_CAP = 50;
+const WEAPONS={
+    t1:[
+        {name:'Canik',img:'https://via.placeholder.com/150',color:'var(--t1)'},
+        {name:'Glock',img:'https://via.placeholder.com/150',color:'var(--t1)'}
+    ],
+    t15:[
+        {name:'Switch',img:'https://via.placeholder.com/150',color:'var(--t15)'}
+    ],
+    t2:[
+        {name:'Draco',img:'https://via.placeholder.com/150',color:'var(--t2)'}
+    ]
+};
 
-/* ================= STATE ================= */
+/* ================= DUPLICATE LOGIC (ADDED) ================= */
 
-let spinning = false;
-let lastIndex = null;
+const DUPLICATE_CHANCE_MIN = 1;
+const DUPLICATE_CHANCE_MAX = 5;
 
-/* ================= DATA ================= */
-
-const WEAPONS = [
-    { name:"Switch", img:"https://via.placeholder.com/160?text=Switch" },
-    { name:"Canik",  img:"https://via.placeholder.com/160?text=Canik" },
-    { name:"Walter", img:"https://via.placeholder.com/160?text=Walter" },
-    { name:"Glock",  img:"https://via.placeholder.com/160?text=Glock" },
-    { name:"Uzi",    img:"https://via.placeholder.com/160?text=Uzi" }
-];
-
-/* ================= BUILD REEL ================= */
-
-const reel = document.getElementById("reel");
-
-function buildReel(){
-    reel.innerHTML = "";
-    for(let i=0;i<WEAPONS.length*12;i++){
-        const w = WEAPONS[i % WEAPONS.length];
-        const div = document.createElement("div");
-        div.className = "reel-item";
-        div.innerHTML = `<img src="${w.img}">`;
-        reel.appendChild(div);
-    }
-}
-buildReel();
-
-/* ================= RNG ================= */
+let LAST_WINNER = null;
 
 function allowDuplicate(){
-    const chance = Math.random() * (DUP_MAX - DUP_MIN) + DUP_MIN;
-    return Math.random() * 100 < chance;
+    const chance =
+        Math.floor(Math.random()*(DUPLICATE_CHANCE_MAX-DUPLICATE_CHANCE_MIN+1))+
+        DUPLICATE_CHANCE_MIN;
+    return Math.random()*100 < chance;
 }
 
-function pickFinalIndex(){
-    let attempts = 0;
-    let index;
+/* ================= NAV ================= */
 
+function nav(id){
+    document.getElementById('sec-weapons').style.display=id==='weapons'?'block':'none';
+    document.getElementById('sec-lucky').style.display=id==='lucky'?'block':'none';
+    document.querySelectorAll('.nav-btn').forEach(b=>b.classList.remove('active'));
+    event.target.classList.add('active');
+}
+
+function getConfig(t){
+    if(t==='all')return{spins:2,pool:WEAPONS.t1};
+    if(t==='t1')return{spins:4,pool:WEAPONS.t1};
+    if(t==='t15')return{spins:4,pool:WEAPONS.t15};
+    if(t==='t2')return{spins:6,pool:WEAPONS.t2};
+}
+
+/* ================= SPIN LOGIC ================= */
+
+function spinOnce(pool,done){
+    const reel=document.getElementById('reel');
+    reel.innerHTML='';
+    reel.style.transition='none';
+    reel.style.transform='translateX(0)';
+
+    const items=[];
+    for(let i=0;i<35;i++)items.push(pool[Math.floor(Math.random()*pool.length)]);
+
+    const winIndex=26;
+
+    /* ===== DUPLICATE-SAFE WINNER PICK ===== */
+    let winner;
+    let safety=0;
     do{
-        index = Math.floor(Math.random() * WEAPONS.length);
-
-        if(lastIndex === null) break;
-        if(index !== lastIndex) break;
+        winner=pool[Math.floor(Math.random()*pool.length)];
+        if(!LAST_WINNER) break;
+        if(winner.name!==LAST_WINNER.name) break;
         if(allowDuplicate()) break;
+        safety++;
+    }while(safety<50);
 
-        attempts++;
-    }while(attempts < SAFETY_CAP);
+    items[winIndex]=winner;
 
-    return index;
-}
-
-/* ================= SPINNER ================= */
-
-function runSpinner(){
-    if(spinning) return;
-    spinning = true;
-
-    const finalIndex = pickFinalIndex();
-    const targetIndex = LOOPS * WEAPONS.length + finalIndex;
-
-    const targetX =
-        targetIndex * ITEM_WIDTH -
-        (reel.parentElement.offsetWidth / 2 - ITEM_WIDTH / 2);
-
-    reel.style.transition = "none";
-    reel.style.transform = "translateX(0)";
-
-    requestAnimationFrame(()=>{
-        reel.style.transition =
-            "transform 4.2s cubic-bezier(.08,.6,.1,1)";
-        reel.style.transform = `translateX(-${targetX}px)`;
+    items.forEach(i=>{
+        reel.innerHTML+=`
+        <div class="reel-item" style="border-bottom:4px solid ${i.color}">
+            <img src="${i.img}">
+        </div>`;
     });
 
-    setTimeout(()=>{
-        lastIndex = finalIndex;
-        spinning = false;
-        console.log("Landed on:", WEAPONS[finalIndex].name);
-    },4200);
+    requestAnimationFrame(()=>{
+        const w=195;
+        const target=winIndex*w-(reel.parentElement.offsetWidth/2-w/2);
+        const fast=target-600;
+
+        reel.style.transition='transform 0.85s linear';
+        reel.style.transform=`translateX(-${fast}px)`;
+
+        setTimeout(()=>{
+            reel.style.transition='transform 0.35s cubic-bezier(0.2,0.9,0.35,1)';
+            reel.style.transform=`translateX(-${target}px)`;
+        },850);
+    });
+
+    setTimeout(()=>done(winner),1300);
+}
+
+function runSpinner(){
+    const tier=document.getElementById('spin-tier').value;
+    const {spins,pool}=getConfig(tier);
+    const box=document.getElementById('spin-results');
+    box.innerHTML='';
+    let c=0;
+
+    function next(){
+        spinOnce(pool,w=>{
+            box.innerHTML+=`
+            <div>
+                <img src="${w.img}">
+                <div style="font-weight:900">${w.name}</div>
+            </div>`;
+            LAST_WINNER=w;
+            c++;
+            if(c<spins)setTimeout(next,300);
+        });
+    }
+    next();
 }
 </script>
 
